@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Basic spatial raster operations &#8212; Spatial machine learning</title>
+    <title>Basic raster operations &#8212; Spatial machine learning</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -52,7 +52,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="My introduction test" href="introduction.html" />
+    <link rel="prev" title="Spatial Machine Learning" href="../intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -113,19 +113,9 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../notebooks.html">
-   Content with notebooks
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="introduction.html">
-   My introduction test
-  </a>
- </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Basic spatial raster operations
+   Basic raster operations
   </a>
  </li>
 </ul>
@@ -335,8 +325,18 @@ title="Print to PDF"
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#reading-and-writing">
-   Reading and writing
+  <a class="reference internal nav-link" href="#example-problems">
+   Example problems
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reading-and-writing-single-band-gridded-data">
+   Reading and writing single band gridded data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reading-and-writing-multiband-satellite-data">
+   Reading and writing multiband satellite data
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -358,7 +358,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Basic spatial raster operations</h1>
+                <h1>Basic raster operations</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -369,8 +369,18 @@ title="Print to PDF"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#reading-and-writing">
-   Reading and writing
+  <a class="reference internal nav-link" href="#example-problems">
+   Example problems
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reading-and-writing-single-band-gridded-data">
+   Reading and writing single band gridded data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reading-and-writing-multiband-satellite-data">
+   Reading and writing multiband satellite data
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -393,55 +403,126 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="basic-spatial-raster-operations">
-<h1>Basic spatial raster operations<a class="headerlink" href="#basic-spatial-raster-operations" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="basic-raster-operations">
+<h1>Basic raster operations<a class="headerlink" href="#basic-raster-operations" title="Permalink to this headline">#</a></h1>
+<p>Gridded data that represent characteristics of the Earth’s surface, the subsurface and the atmosphere are ubiquitous in earth science as well as in climatology, oceanography and geophysics. These data are generated from field observations, earth observation, and/or spatiotemporal modelling. To answer relevant questions with these data, you need to understand the details of the data source, to standardize the data to a common projection and bounding box, and to combine data sources. High-resolution spatial data comprises large data files, which leads to storage and memory challenges. Therefore, we will start with a small dataset, but we will also address methods to carry out computations at scale.</p>
+<p><strong>The objectives</strong> of this notebook are to (1) learn to explore spatial raster data and (2) to homogenize the data, and (3) calculate zonal statistics.</p>
+<section id="example-problems">
+<h2>Example problems<a class="headerlink" href="#example-problems" title="Permalink to this headline">#</a></h2>
+<p>Example questions that can be answered with these operations are:</p>
 <ul class="simple">
-<li><p>reprojection</p></li>
-<li><p>stacking</p></li>
-<li><p>viualisation</p></li>
-<li><p>clipping</p></li>
-<li><p>mosaicking</p></li>
-<li><p>zonal statistics</p></li>
+<li><p>Is the vegetation more photosynthetically active on north-, or south-facing slopes?</p></li>
+<li><p>What is the temperature difference between builtup areas, forest and</p></li>
+<li><p>How does the size of the green surface area affect biodiversity?</p></li>
 </ul>
-<section id="reading-and-writing">
-<h2>Reading and writing<a class="headerlink" href="#reading-and-writing" title="Permalink to this headline">#</a></h2>
+<p>In this notebook, we will address the following components to enable answering these kinds of question:</p>
+<ul class="simple">
+<li><p>Reading and writing spatial data (inluding stacking multiband images)</p></li>
+<li><p>Data visualisation</p></li>
+<li><p>Reprojection</p></li>
+<li><p>Homogenisation through clipping and resampling</p></li>
+<li><p>Mosaicking</p></li>
+<li><p>Zonal statistics</p></li>
+</ul>
+</section>
+<section id="reading-and-writing-single-band-gridded-data">
+<h2>Reading and writing single band gridded data<a class="headerlink" href="#reading-and-writing-single-band-gridded-data" title="Permalink to this headline">#</a></h2>
+<p><strong>note</strong> Work with xarray for now.</p>
+<p>We will work with a digital elevation model (DEM) of a part of the French alps. The DEM only has a single band of data with terrain height values. Open the DEM (see ‘../data/dem.tif’) in QGIS and inspect the properties in the user interface. Find the following information:</p>
+<ul class="simple">
+<li><p>coordinate system</p></li>
+<li><p>the number of rows and columns</p></li>
+<li><p>and the bounding box of this dataset.</p></li>
+</ul>
+<p>The code below opens and plots the data, and it gives the same information through the ‘rio’ accessor.</p>
+<p><strong>Assert that the information you got from QGIS equals the info below.</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span> <span class="k">as</span> <span class="n">pjoin</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">import</span> <span class="nn">rioxarray</span>
 
-<span class="kn">import</span> <span class="nn">datashader</span> <span class="k">as</span> <span class="nn">ds</span>
+<span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;../data&#39;</span>
+<span class="n">scratch_dir</span> <span class="o">=</span> <span class="s1">&#39;../scratch&#39;</span>
+
+<span class="c1"># read and plot the data</span>
+<span class="n">dem</span> <span class="o">=</span> <span class="n">rioxarray</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;dem.tif&quot;</span><span class="p">))</span>
+<span class="n">dem</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;crs = &#39;</span><span class="p">,</span> <span class="n">dem</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">crs</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;nr cols, nr rows = &#39;</span><span class="p">,</span> <span class="n">dem</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">dem</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;xmin, ymin, xmax, ymax = &#39;</span><span class="p">,</span> <span class="n">dem</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">bounds</span><span class="p">())</span>
+
+<span class="c1"># write the data to file in the scratch directory</span>
+<span class="n">dem</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">to_raster</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;dem_out.tif&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>crs =  EPSG:32631
+nr cols, nr rows =  3065 1895
+xmin, ymin, xmax, ymax =  (715657.6212181412, 4916706.169415978, 730982.6212181412, 4926181.169415978)
+</pre></div>
+</div>
+<img alt="../_images/rasterbasics_2_1.png" src="../_images/rasterbasics_2_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">contextily</span>
+<span class="kn">import</span> <span class="nn">geopandas</span>
+
+<span class="c1"># db = geopandas.read_file(</span>
+<span class="c1">#     &quot;http://darribas.org/gds_course/content/data/dar_es_salaam.geojson&quot;</span>
+<span class="c1"># )</span>
+
+<span class="c1"># ax = db.plot(</span>
+<span class="c1">#     facecolor=&quot;none&quot;, </span>
+<span class="c1">#     edgecolor=&quot;red&quot;,</span>
+<span class="c1">#     linewidth=0.5,</span>
+<span class="c1">#     figsize=(9, 9)</span>
+<span class="c1"># )</span>
+<span class="c1"># contextily.add_basemap(</span>
+<span class="c1">#     ax, </span>
+<span class="c1">#     crs=db.crs, </span>
+<span class="c1">#     source=contextily.providers.Esri.WorldImagery</span>
+<span class="c1"># );</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dem</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">contextily</span><span class="o">.</span><span class="n">add_basemap</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="n">dem</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">crs</span><span class="o">.</span><span class="n">to_string</span><span class="p">(),</span> <span class="n">source</span><span class="o">=</span><span class="n">contextily</span><span class="o">.</span><span class="n">providers</span><span class="o">.</span><span class="n">Esri</span><span class="o">.</span><span class="n">WorldImagery</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/rasterbasics_3_0.png" src="../_images/rasterbasics_3_0.png" />
+</div>
+</div>
+</section>
+<section id="reading-and-writing-multiband-satellite-data">
+<h2>Reading and writing multiband satellite data<a class="headerlink" href="#reading-and-writing-multiband-satellite-data" title="Permalink to this headline">#</a></h2>
+<p>The second example is Sentinel 1 multispectral data. These images consist of separate files for each of the bands.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datashader</span> <span class="k">as</span> <span class="nn">ds</span>
 <span class="kn">from</span> <span class="nn">datashader.transfer_functions</span> <span class="kn">import</span> <span class="n">shade</span>
 <span class="kn">from</span> <span class="nn">datashader.transfer_functions</span> <span class="kn">import</span> <span class="n">stack</span>
 <span class="kn">from</span> <span class="nn">datashader.transfer_functions</span> <span class="kn">import</span> <span class="n">dynspread</span>
 <span class="kn">from</span> <span class="nn">datashader.transfer_functions</span> <span class="kn">import</span> <span class="n">set_background</span>
 <span class="kn">from</span> <span class="nn">datashader.colors</span> <span class="kn">import</span> <span class="n">Elevation</span>
-
-<span class="kn">import</span> <span class="nn">xrspatial</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">rioxarray</span>
-<span class="kn">from</span> <span class="nn">xrspatial</span> <span class="kn">import</span> <span class="n">hillshade</span>
-
-<span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;../data&#39;</span>
-<span class="n">dem</span> <span class="o">=</span> <span class="n">rioxarray</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span><span class="s2">&quot;../data/dem2.tif&quot;</span><span class="p">)</span>
-<span class="n">dem</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-<span class="c1">#stack(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#stack(</span>
 <span class="c1">#    shade(hillshade(dem), cmap=[&quot;grey&quot;, &quot;white&quot;]),</span>
 <span class="c1">#    shade(dem, cmap=Elevation, alpha=128),)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.QuadMesh at 0x189bc04c130&gt;
-</pre></div>
-</div>
-<img alt="../_images/rasterbasics_3_1.png" src="../_images/rasterbasics_3_1.png" />
 </div>
 </div>
 </section>
@@ -480,11 +561,11 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="introduction.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="../intro.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">My introduction test</p>
+            <p class="prev-next-title">Spatial Machine Learning</p>
         </div>
     </a>
 </div>

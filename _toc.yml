@@ -1,9 +1,7 @@
-# Table of contents
-# Learn more at https://jupyterbook.org/customize/toc.html
+# Table of contents Spatial Machine Learning
 
 format: jb-book
 root: intro
 chapters:
-- file: notebooks
-- file: notebooks_SML/introduction.ipynb
 - file: notebooks_SML/rasterbasics.ipynb
+- file: notebooks_SML/notebooksxxx.ipynb
