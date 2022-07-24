@@ -1,5 +1,7 @@
 # Spatial Machine Learning
 
+
+
 - Machine learning
 - Spatial machine learning
 - Working with remote sensing images
@@ -13,7 +15,7 @@ Each chapter consists of a notebook that combines text with code. Formative ques
 For these notebooks we assume a basic knowledge of 
 - Python, and specifically the numpy, pandas and geopandas packages
 - QGIS for overlay of data and visualization
-- QGIS for digitization of polygons of labelled reference data.
+- QGIS for digitization of polygons of labeled reference data.
 
 
 ```{tableofcontents}
