@@ -1,0 +1,8 @@
+band,wl_min_nm,wl_max_nm,wl_mid_nm,label
+B1,435,451,443,Coastal_and_aerosol
+B2,452,512,482,Blue
+B3,533,590,561.5,Green
+B4,636,673,654.5,Red
+B5,851,879,865,NIR
+B6,1566,1651,1608.5,SWIR1
+B7,2107,2294,2200.5,SWIR2

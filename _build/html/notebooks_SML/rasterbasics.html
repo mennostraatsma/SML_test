@@ -21,7 +21,7 @@
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -37,7 +37,7 @@
     <script src="../_static/doctools.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -52,6 +52,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Image classification and change detection" href="classification_and_change_detection.html" />
     <link rel="prev" title="Spatial Machine Learning" href="../intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -116,6 +117,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Basic raster operations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="classification_and_change_detection.html">
+   Image classification and change detection
   </a>
  </li>
 </ul>
@@ -324,30 +330,119 @@ title="Print to PDF"
     </div>
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-problems">
-   Example problems
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Basic raster operations
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-problems">
+     Example problems
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#python-packages">
+   Python packages
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#xarray">
+     xarray
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#rioxarray">
+     rioxarray
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#xarray-spatial">
+     xarray-spatial
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reading-and-writing-single-band-data">
+   Reading and writing single band data
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#reading-and-writing-single-band-gridded-data">
-   Reading and writing single band gridded data
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#raster-analysis">
+   Raster analysis
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-1">
+     Exercise 1
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stacking-and-clipping-satellite-data">
+   Stacking and clipping satellite data
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#reading-and-writing-multiband-satellite-data">
-   Reading and writing multiband satellite data
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#visualizing-multispectral-images">
+   Visualizing multispectral images
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-2">
+     Exercise 2
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#spectral-ratioing">
+   Spectral ratioing
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-3">
+     Exercise 3
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#homogenisation-through-mosaicking-reprojecting-and-resampling">
+   Homogenisation through mosaicking, reprojecting and resampling
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#reprojecting-raster-data">
+     Reprojecting raster data
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mosaicking-raster-data">
+   Mosaicking raster data
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#reprojection">
-   Reprojection
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-homogenisation">
+   Data homogenisation
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#stacking-and-visualisation">
-   Stacking and visualisation
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#zonal-statistics">
+   Zonal statistics
   </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-4">
+     Exercise 4
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -368,30 +463,119 @@ title="Print to PDF"
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-problems">
-   Example problems
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Basic raster operations
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-problems">
+     Example problems
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#python-packages">
+   Python packages
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#xarray">
+     xarray
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#rioxarray">
+     rioxarray
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#xarray-spatial">
+     xarray-spatial
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reading-and-writing-single-band-data">
+   Reading and writing single band data
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#reading-and-writing-single-band-gridded-data">
-   Reading and writing single band gridded data
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#raster-analysis">
+   Raster analysis
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-1">
+     Exercise 1
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stacking-and-clipping-satellite-data">
+   Stacking and clipping satellite data
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#reading-and-writing-multiband-satellite-data">
-   Reading and writing multiband satellite data
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#visualizing-multispectral-images">
+   Visualizing multispectral images
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-2">
+     Exercise 2
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#spectral-ratioing">
+   Spectral ratioing
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-3">
+     Exercise 3
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#homogenisation-through-mosaicking-reprojecting-and-resampling">
+   Homogenisation through mosaicking, reprojecting and resampling
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#reprojecting-raster-data">
+     Reprojecting raster data
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mosaicking-raster-data">
+   Mosaicking raster data
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#reprojection">
-   Reprojection
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-homogenisation">
+   Data homogenisation
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#stacking-and-visualisation">
-   Stacking and visualisation
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#zonal-statistics">
+   Zonal statistics
   </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-4">
+     Exercise 4
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -405,7 +589,7 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="basic-raster-operations">
 <h1>Basic raster operations<a class="headerlink" href="#basic-raster-operations" title="Permalink to this headline">#</a></h1>
-<p>Gridded data that represent characteristics of the Earth’s surface, the subsurface and the atmosphere are ubiquitous in earth science as well as in climatology, oceanography and geophysics. These data are generated from field observations, earth observation, and/or spatiotemporal modelling. To answer relevant questions with these data, you need to understand the details of the data source, to standardize the data to a common projection and bounding box, and to combine data sources. High-resolution spatial data comprises large data files, which leads to storage and memory challenges. Therefore, we will start with a small dataset, but we will also address methods to carry out computations at scale.</p>
+<p>Gridded data that represent characteristics of the Earth’s surface, the subsurface and the atmosphere are ubiquitous in earth science as well as in climatology, oceanography and geophysics. These data are generated from field observations, earth observation, and/or spatiotemporal modelling. To answer relevant questions with these data, you need to understand the details of the data source, to standardize the data to a common projection and bounding box, and to combine data sources. High-resolution spatial data comprises large data files, which leads to storage and memory challenges. Therefore, we will start with a small dataset.</p>
 <p><strong>The objectives</strong> of this notebook are to (1) learn to explore spatial raster data and (2) to homogenize the data, and (3) calculate zonal statistics.</p>
 <section id="example-problems">
 <h2>Example problems<a class="headerlink" href="#example-problems" title="Permalink to this headline">#</a></h2>
@@ -417,17 +601,43 @@ title="Print to PDF"
 </ul>
 <p>In this notebook, we will address the following components to enable answering these kinds of question:</p>
 <ul class="simple">
-<li><p>Reading and writing spatial data (inluding stacking multiband images)</p></li>
+<li><p>Reading and writing spatial data</p></li>
+<li><p>Raster analysis</p></li>
 <li><p>Data visualisation</p></li>
 <li><p>Reprojection</p></li>
-<li><p>Homogenisation through clipping and resampling</p></li>
-<li><p>Mosaicking</p></li>
+<li><p>Homogenisation through mosaicing, reprojection, clipping and resampling</p></li>
 <li><p>Zonal statistics</p></li>
 </ul>
 </section>
-<section id="reading-and-writing-single-band-gridded-data">
-<h2>Reading and writing single band gridded data<a class="headerlink" href="#reading-and-writing-single-band-gridded-data" title="Permalink to this headline">#</a></h2>
-<p><strong>note</strong> Work with xarray for now.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="python-packages">
+<h1>Python packages<a class="headerlink" href="#python-packages" title="Permalink to this headline">#</a></h1>
+<p>Spatial data science uses many software packages. In this
+notebook, we will use <a class="reference external" href="https://docs.xarray.dev/en/stable/index.html"><code class="docutils literal notranslate"><span class="pre">xarray</span></code></a> as the data structure to store and analyse the spatial data. <code class="docutils literal notranslate"><span class="pre">xarray</span></code> makes working with labeled data flexible and efficient. It is strongly inspired by the <code class="docutils literal notranslate"><span class="pre">pandas</span></code> package in terms of its api, but extends the functionality to dimensional (spatial) data.</p>
+<section id="xarray">
+<h2>xarray<a class="headerlink" href="#xarray" title="Permalink to this headline">#</a></h2>
+<p>The flexibility of <code class="docutils literal notranslate"><span class="pre">xarray</span></code> comes from the requirements of climate forecasters who work with netcdf files that contain spatiotemporal fields of various atmospheric variables such as temperature and precipitation. For 2D data, such as a digital elevation model or a land cover classification, only a single variable is required, which requires only a subset of the options. An <code class="docutils literal notranslate"><span class="pre">xarray</span></code> data structure consists of the following options, see the details of the terminology <a class="reference external" href="https://docs.xarray.dev/en/stable/user-guide/terminology.html">here</a> and the figure below. :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">DataArray</span></code>, a multidimensional numpy array with metadata</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DataSet</span></code>, a dict-like collection of <code class="docutils literal notranslate"><span class="pre">DataArray</span></code> objects</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Dimension</span></code>, the spatial and/or temporal dimension of the data</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Coordinates</span></code>, the latitude and longitude for geographic data, or x and y for projected data</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Spatial_ref</span></code>, information in the projection of the data</p></li>
+</ul>
+<p><img alt="xarray data structure" src="../_images/dataset-diagram.png" /></p>
+</section>
+<section id="rioxarray">
+<h2>rioxarray<a class="headerlink" href="#rioxarray" title="Permalink to this headline">#</a></h2>
+<p>File IO poses a big challenge in spatial data science due to the large number of file formats. The <a class="reference external" href="https://gdal.org/index.html">Geo Data Abstraction Library (GDAL)</a> provides a translatory library for more than 150 raster file formats and more than 75 vector file formats. GDAL comes with many useful functions that include changing the file format, reprojecting data, merging data sets and resampling. Therefore it is included in the OSGeo software stack and part of the QGIS distribution. The Python API for GDAL rather verbose. A single command line function can easily take 15 lines of code.</p>
+<p><a class="reference external" href="https://corteva.github.io/rioxarray/stable/index.html"><code class="docutils literal notranslate"><span class="pre">rioxarray</span></code></a>, raster IO for xarray, leverages the GDAL library to integrate with xarray data sets for file IO and file translation. It also comes the the <code class="docutils literal notranslate"><span class="pre">.rio</span></code> accessor for <code class="docutils literal notranslate"><span class="pre">xarray</span></code> objects in memory.</p>
+</section>
+<section id="xarray-spatial">
+<h2>xarray-spatial<a class="headerlink" href="#xarray-spatial" title="Permalink to this headline">#</a></h2>
+<p><a class="reference external" href="https://xarray-spatial.org/">xarray-spatial</a> include raster-analysis functions needed for GIS developers, which is not available in xarray itself. It includes functions for spreading, zonal and focal operations, and surface analysis.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="reading-and-writing-single-band-data">
+<h1>Reading and writing single band data<a class="headerlink" href="#reading-and-writing-single-band-data" title="Permalink to this headline">#</a></h1>
 <p>We will work with a digital elevation model (DEM) of a part of the French alps. The DEM only has a single band of data with terrain height values. Open the DEM (see ‘../data/dem.tif’) in QGIS and inspect the properties in the user interface. Find the following information:</p>
 <ul class="simple">
 <li><p>coordinate system</p></li>
@@ -439,15 +649,21 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span> <span class="k">as</span> <span class="n">pjoin</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">import</span> <span class="nn">xrspatial</span> <span class="k">as</span> <span class="nn">xrs</span>
 <span class="kn">import</span> <span class="nn">rioxarray</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
-<span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;../data&#39;</span>
-<span class="n">scratch_dir</span> <span class="o">=</span> <span class="s1">&#39;../scratch&#39;</span>
+
+<span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;../data&#39;</span>         <span class="c1"># relative path to the input data</span>
+<span class="n">scratch_dir</span> <span class="o">=</span> <span class="s1">&#39;../scratch&#39;</span>   <span class="c1"># relative path to the output data.</span>
 
 <span class="c1"># read and plot the data</span>
-<span class="n">dem</span> <span class="o">=</span> <span class="n">rioxarray</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;dem.tif&quot;</span><span class="p">))</span>
+<span class="n">dem</span> <span class="o">=</span> <span class="n">rioxarray</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;dem.tif&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span> 
 <span class="n">dem</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
 
 <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;crs = &#39;</span><span class="p">,</span> <span class="n">dem</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">crs</span><span class="p">)</span>
@@ -465,72 +681,1352 @@ nr cols, nr rows =  3065 1895
 xmin, ymin, xmax, ymax =  (715657.6212181412, 4916706.169415978, 730982.6212181412, 4926181.169415978)
 </pre></div>
 </div>
-<img alt="../_images/rasterbasics_2_1.png" src="../_images/rasterbasics_2_1.png" />
+<img alt="../_images/rasterbasics_3_1.png" src="../_images/rasterbasics_3_1.png" />
 </div>
 </div>
+<p>An overview of the <code class="docutils literal notranslate"><span class="pre">dem</span></code> is obtained by simply typing the variable name. It provides the data type (DataArray), coordinates with the dimensions and the spatial reference. Note that the layered cilinder on the right of the coordinates are expandable.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">contextily</span>
-<span class="kn">import</span> <span class="nn">geopandas</span>
-
-<span class="c1"># db = geopandas.read_file(</span>
-<span class="c1">#     &quot;http://darribas.org/gds_course/content/data/dar_es_salaam.geojson&quot;</span>
-<span class="c1"># )</span>
-
-<span class="c1"># ax = db.plot(</span>
-<span class="c1">#     facecolor=&quot;none&quot;, </span>
-<span class="c1">#     edgecolor=&quot;red&quot;,</span>
-<span class="c1">#     linewidth=0.5,</span>
-<span class="c1">#     figsize=(9, 9)</span>
-<span class="c1"># )</span>
-<span class="c1"># contextily.add_basemap(</span>
-<span class="c1">#     ax, </span>
-<span class="c1">#     crs=db.crs, </span>
-<span class="c1">#     source=contextily.providers.Esri.WorldImagery</span>
-<span class="c1"># );</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dem</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-
-<span class="n">contextily</span><span class="o">.</span><span class="n">add_basemap</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="n">dem</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">crs</span><span class="o">.</span><span class="n">to_string</span><span class="p">(),</span> <span class="n">source</span><span class="o">=</span><span class="n">contextily</span><span class="o">.</span><span class="n">providers</span><span class="o">.</span><span class="n">Esri</span><span class="o">.</span><span class="n">WorldImagery</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dem</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/rasterbasics_3_0.png" src="../_images/rasterbasics_3_0.png" />
-</div>
+<div class="output text_html"><div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
+<defs>
+<symbol id="icon-database" viewBox="0 0 32 32">
+<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
+<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+</symbol>
+<symbol id="icon-file-text2" viewBox="0 0 32 32">
+<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
+<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+</symbol>
+</defs>
+</svg>
+<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
+ *
+ */
+
+:root {
+  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
+  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
+  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
+  --xr-border-color: var(--jp-border-color2, #e0e0e0);
+  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
+  --xr-background-color: var(--jp-layout-color0, white);
+  --xr-background-color-row-even: var(--jp-layout-color1, white);
+  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
+}
+
+html[theme=dark],
+body.vscode-dark {
+  --xr-font-color0: rgba(255, 255, 255, 1);
+  --xr-font-color2: rgba(255, 255, 255, 0.54);
+  --xr-font-color3: rgba(255, 255, 255, 0.38);
+  --xr-border-color: #1F1F1F;
+  --xr-disabled-color: #515151;
+  --xr-background-color: #111111;
+  --xr-background-color-row-even: #111111;
+  --xr-background-color-row-odd: #313131;
+}
+
+.xr-wrap {
+  display: block !important;
+  min-width: 300px;
+  max-width: 700px;
+}
+
+.xr-text-repr-fallback {
+  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
+  display: none;
+}
+
+.xr-header {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+  border-bottom: solid 1px var(--xr-border-color);
+}
+
+.xr-header > div,
+.xr-header > ul {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.xr-obj-type,
+.xr-array-name {
+  margin-left: 2px;
+  margin-right: 10px;
+}
+
+.xr-obj-type {
+  color: var(--xr-font-color2);
+}
+
+.xr-sections {
+  padding-left: 0 !important;
+  display: grid;
+  grid-template-columns: 150px auto auto 1fr 20px 20px;
+}
+
+.xr-section-item {
+  display: contents;
+}
+
+.xr-section-item input {
+  display: none;
+}
+
+.xr-section-item input + label {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-item input:enabled + label {
+  cursor: pointer;
+  color: var(--xr-font-color2);
+}
+
+.xr-section-item input:enabled + label:hover {
+  color: var(--xr-font-color0);
+}
+
+.xr-section-summary {
+  grid-column: 1;
+  color: var(--xr-font-color2);
+  font-weight: 500;
+}
+
+.xr-section-summary > span {
+  display: inline-block;
+  padding-left: 0.5em;
+}
+
+.xr-section-summary-in:disabled + label {
+  color: var(--xr-font-color2);
+}
+
+.xr-section-summary-in + label:before {
+  display: inline-block;
+  content: '►';
+  font-size: 11px;
+  width: 15px;
+  text-align: center;
+}
+
+.xr-section-summary-in:disabled + label:before {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-summary-in:checked + label:before {
+  content: '▼';
+}
+
+.xr-section-summary-in:checked + label > span {
+  display: none;
+}
+
+.xr-section-summary,
+.xr-section-inline-details {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.xr-section-inline-details {
+  grid-column: 2 / -1;
+}
+
+.xr-section-details {
+  display: none;
+  grid-column: 1 / -1;
+  margin-bottom: 5px;
+}
+
+.xr-section-summary-in:checked ~ .xr-section-details {
+  display: contents;
+}
+
+.xr-array-wrap {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 20px auto;
+}
+
+.xr-array-wrap > label {
+  grid-column: 1;
+  vertical-align: top;
+}
+
+.xr-preview {
+  color: var(--xr-font-color3);
+}
+
+.xr-array-preview,
+.xr-array-data {
+  padding: 0 5px !important;
+  grid-column: 2;
+}
+
+.xr-array-data,
+.xr-array-in:checked ~ .xr-array-preview {
+  display: none;
+}
+
+.xr-array-in:checked ~ .xr-array-data,
+.xr-array-preview {
+  display: inline-block;
+}
+
+.xr-dim-list {
+  display: inline-block !important;
+  list-style: none;
+  padding: 0 !important;
+  margin: 0;
+}
+
+.xr-dim-list li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.xr-dim-list:before {
+  content: '(';
+}
+
+.xr-dim-list:after {
+  content: ')';
+}
+
+.xr-dim-list li:not(:last-child):after {
+  content: ',';
+  padding-right: 5px;
+}
+
+.xr-has-index {
+  font-weight: bold;
+}
+
+.xr-var-list,
+.xr-var-item {
+  display: contents;
+}
+
+.xr-var-item > div,
+.xr-var-item label,
+.xr-var-item > .xr-var-name span {
+  background-color: var(--xr-background-color-row-even);
+  margin-bottom: 0;
+}
+
+.xr-var-item > .xr-var-name:hover span {
+  padding-right: 5px;
+}
+
+.xr-var-list > li:nth-child(odd) > div,
+.xr-var-list > li:nth-child(odd) > label,
+.xr-var-list > li:nth-child(odd) > .xr-var-name span {
+  background-color: var(--xr-background-color-row-odd);
+}
+
+.xr-var-name {
+  grid-column: 1;
+}
+
+.xr-var-dims {
+  grid-column: 2;
+}
+
+.xr-var-dtype {
+  grid-column: 3;
+  text-align: right;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-preview {
+  grid-column: 4;
+}
+
+.xr-var-name,
+.xr-var-dims,
+.xr-var-dtype,
+.xr-preview,
+.xr-attrs dt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+
+.xr-var-name:hover,
+.xr-var-dims:hover,
+.xr-var-dtype:hover,
+.xr-attrs dt:hover {
+  overflow: visible;
+  width: auto;
+  z-index: 1;
+}
+
+.xr-var-attrs,
+.xr-var-data {
+  display: none;
+  background-color: var(--xr-background-color) !important;
+  padding-bottom: 5px !important;
+}
+
+.xr-var-attrs-in:checked ~ .xr-var-attrs,
+.xr-var-data-in:checked ~ .xr-var-data {
+  display: block;
+}
+
+.xr-var-data > table {
+  float: right;
+}
+
+.xr-var-name span,
+.xr-var-data,
+.xr-attrs {
+  padding-left: 25px !important;
+}
+
+.xr-attrs,
+.xr-var-attrs,
+.xr-var-data {
+  grid-column: 1 / -1;
+}
+
+dl.xr-attrs {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 125px auto;
+}
+
+.xr-attrs dt,
+.xr-attrs dd {
+  padding: 0;
+  margin: 0;
+  float: left;
+  padding-right: 10px;
+  width: auto;
+}
+
+.xr-attrs dt {
+  font-weight: normal;
+  grid-column: 1;
+}
+
+.xr-attrs dt:hover span {
+  display: inline-block;
+  background: var(--xr-background-color);
+  padding-right: 10px;
+}
+
+.xr-attrs dd {
+  grid-column: 2;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.xr-icon-database,
+.xr-icon-file-text2 {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1.5em !important;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+</style><pre class='xr-text-repr-fallback'>&lt;xarray.DataArray (y: 1895, x: 3065)&gt;
+array([[832.4293 , 830.6872 , 828.9995 , ..., 971.5688 , 970.3875 , 969.2219 ],
+       [833.7491 , 832.1037 , 830.5921 , ..., 971.9049 , 970.7319 , 969.58813],
+       [835.1948 , 833.77124, 832.4583 , ..., 972.2599 , 971.1036 , 969.9869 ],
+       ...,
+       [892.69434, 891.4918 , 890.22253, ..., 597.469  , 597.4671 , 597.4556 ],
+       [892.7596 , 891.4594 , 890.0948 , ..., 597.256  , 597.2413 , 597.2349 ],
+       [892.76953, 891.38574, 889.93823, ..., 597.0923 , 597.0565 , 597.0371 ]],
+      dtype=float32)
+Coordinates:
+    band         int32 1
+  * x            (x) float64 7.157e+05 7.157e+05 7.157e+05 ... 7.31e+05 7.31e+05
+  * y            (y) float64 4.926e+06 4.926e+06 ... 4.917e+06 4.917e+06
+    spatial_ref  int32 0
+Attributes:
+    SourceBandIndex:         0
+    STATISTICS_COVARIANCES:  60223.97714605515
+    STATISTICS_MAXIMUM:      1818.408203125
+    STATISTICS_MEAN:         931.67042975825
+    STATISTICS_MEDIAN:       nan
+    STATISTICS_MINIMUM:      593.40081787109
+    STATISTICS_SKIPFACTORX:  1
+    STATISTICS_SKIPFACTORY:  1
+    STATISTICS_STDDEV:       245.40573983926
+    _FillValue:              -3.4028230607370965e+38
+    scale_factor:            1.0
+    add_offset:              0.0</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-array-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>y</span>: 1895</li><li><span class='xr-has-index'>x</span>: 3065</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-8624e09c-3fa9-410a-a2e0-063a90d86a64' class='xr-array-in' type='checkbox' checked><label for='section-8624e09c-3fa9-410a-a2e0-063a90d86a64' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>832.4 830.7 829.0 827.5 826.1 824.8 ... 597.3 597.2 597.1 597.1 597.0</span></div><div class='xr-array-data'><pre>array([[832.4293 , 830.6872 , 828.9995 , ..., 971.5688 , 970.3875 , 969.2219 ],
+       [833.7491 , 832.1037 , 830.5921 , ..., 971.9049 , 970.7319 , 969.58813],
+       [835.1948 , 833.77124, 832.4583 , ..., 972.2599 , 971.1036 , 969.9869 ],
+       ...,
+       [892.69434, 891.4918 , 890.22253, ..., 597.469  , 597.4671 , 597.4556 ],
+       [892.7596 , 891.4594 , 890.0948 , ..., 597.256  , 597.2413 , 597.2349 ],
+       [892.76953, 891.38574, 889.93823, ..., 597.0923 , 597.0565 , 597.0371 ]],
+      dtype=float32)</pre></div></div></li><li class='xr-section-item'><input id='section-7b0d4557-2c2f-41c7-b661-ef00a201f8bb' class='xr-section-summary-in' type='checkbox'  checked><label for='section-7b0d4557-2c2f-41c7-b661-ef00a201f8bb' class='xr-section-summary' >Coordinates: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>band</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>int32</div><div class='xr-var-preview xr-preview'>1</div><input id='attrs-e6e34870-1628-4bca-bb96-29bcd680ae6c' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-e6e34870-1628-4bca-bb96-29bcd680ae6c' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-74c55fc0-a05e-4ba7-8e78-82bf53f7fe0e' class='xr-var-data-in' type='checkbox'><label for='data-74c55fc0-a05e-4ba7-8e78-82bf53f7fe0e' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array(1)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>x</span></div><div class='xr-var-dims'>(x)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>7.157e+05 7.157e+05 ... 7.31e+05</div><input id='attrs-4d1ca716-56d3-481e-b2bf-5ff65078b0e1' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-4d1ca716-56d3-481e-b2bf-5ff65078b0e1' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-d69bae02-c208-4d74-a25f-d83e028480b2' class='xr-var-data-in' type='checkbox'><label for='data-d69bae02-c208-4d74-a25f-d83e028480b2' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([715660.121218, 715665.121218, 715670.121218, ..., 730970.121218,
+       730975.121218, 730980.121218])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>y</span></div><div class='xr-var-dims'>(y)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.926e+06 4.926e+06 ... 4.917e+06</div><input id='attrs-154e3407-8b11-444d-b897-d328b37b7972' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-154e3407-8b11-444d-b897-d328b37b7972' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-63436059-46c7-4012-867c-8f70cd0c3aa9' class='xr-var-data-in' type='checkbox'><label for='data-63436059-46c7-4012-867c-8f70cd0c3aa9' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([4926178.669416, 4926173.669416, 4926168.669416, ..., 4916718.669416,
+       4916713.669416, 4916708.669416])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>spatial_ref</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>int32</div><div class='xr-var-preview xr-preview'>0</div><input id='attrs-0c35a6a7-4101-4963-8f32-a2ef30197fcc' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-0c35a6a7-4101-4963-8f32-a2ef30197fcc' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-2c214a33-0492-4daa-88c7-677fed189ab9' class='xr-var-data-in' type='checkbox'><label for='data-2c214a33-0492-4daa-88c7-677fed189ab9' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>crs_wkt :</span></dt><dd>PROJCS[&quot;WGS 84 / UTM zone 31N&quot;,GEOGCS[&quot;WGS 84&quot;,DATUM[&quot;WGS_1984&quot;,SPHEROID[&quot;WGS 84&quot;,6378137,298.257223563,AUTHORITY[&quot;EPSG&quot;,&quot;7030&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;6326&quot;]],PRIMEM[&quot;Greenwich&quot;,0,AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],UNIT[&quot;degree&quot;,0.0174532925199433,AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;4326&quot;]],PROJECTION[&quot;Transverse_Mercator&quot;],PARAMETER[&quot;latitude_of_origin&quot;,0],PARAMETER[&quot;central_meridian&quot;,3],PARAMETER[&quot;scale_factor&quot;,0.9996],PARAMETER[&quot;false_easting&quot;,500000],PARAMETER[&quot;false_northing&quot;,0],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],AXIS[&quot;Easting&quot;,EAST],AXIS[&quot;Northing&quot;,NORTH],AUTHORITY[&quot;EPSG&quot;,&quot;32631&quot;]]</dd><dt><span>semi_major_axis :</span></dt><dd>6378137.0</dd><dt><span>semi_minor_axis :</span></dt><dd>6356752.314245179</dd><dt><span>inverse_flattening :</span></dt><dd>298.257223563</dd><dt><span>reference_ellipsoid_name :</span></dt><dd>WGS 84</dd><dt><span>longitude_of_prime_meridian :</span></dt><dd>0.0</dd><dt><span>prime_meridian_name :</span></dt><dd>Greenwich</dd><dt><span>geographic_crs_name :</span></dt><dd>WGS 84</dd><dt><span>horizontal_datum_name :</span></dt><dd>World Geodetic System 1984</dd><dt><span>projected_crs_name :</span></dt><dd>WGS 84 / UTM zone 31N</dd><dt><span>grid_mapping_name :</span></dt><dd>transverse_mercator</dd><dt><span>latitude_of_projection_origin :</span></dt><dd>0.0</dd><dt><span>longitude_of_central_meridian :</span></dt><dd>3.0</dd><dt><span>false_easting :</span></dt><dd>500000.0</dd><dt><span>false_northing :</span></dt><dd>0.0</dd><dt><span>scale_factor_at_central_meridian :</span></dt><dd>0.9996</dd><dt><span>spatial_ref :</span></dt><dd>PROJCS[&quot;WGS 84 / UTM zone 31N&quot;,GEOGCS[&quot;WGS 84&quot;,DATUM[&quot;WGS_1984&quot;,SPHEROID[&quot;WGS 84&quot;,6378137,298.257223563,AUTHORITY[&quot;EPSG&quot;,&quot;7030&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;6326&quot;]],PRIMEM[&quot;Greenwich&quot;,0,AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],UNIT[&quot;degree&quot;,0.0174532925199433,AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;4326&quot;]],PROJECTION[&quot;Transverse_Mercator&quot;],PARAMETER[&quot;latitude_of_origin&quot;,0],PARAMETER[&quot;central_meridian&quot;,3],PARAMETER[&quot;scale_factor&quot;,0.9996],PARAMETER[&quot;false_easting&quot;,500000],PARAMETER[&quot;false_northing&quot;,0],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],AXIS[&quot;Easting&quot;,EAST],AXIS[&quot;Northing&quot;,NORTH],AUTHORITY[&quot;EPSG&quot;,&quot;32631&quot;]]</dd><dt><span>GeoTransform :</span></dt><dd>715657.6212181412 5.0 0.0 4926181.169415978 0.0 -5.0</dd></dl></div><div class='xr-var-data'><pre>array(0)</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-99761bac-3211-4e45-a231-c6342b25203d' class='xr-section-summary-in' type='checkbox'  ><label for='section-99761bac-3211-4e45-a231-c6342b25203d' class='xr-section-summary' >Attributes: <span>(12)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>SourceBandIndex :</span></dt><dd>0</dd><dt><span>STATISTICS_COVARIANCES :</span></dt><dd>60223.97714605515</dd><dt><span>STATISTICS_MAXIMUM :</span></dt><dd>1818.408203125</dd><dt><span>STATISTICS_MEAN :</span></dt><dd>931.67042975825</dd><dt><span>STATISTICS_MEDIAN :</span></dt><dd>nan</dd><dt><span>STATISTICS_MINIMUM :</span></dt><dd>593.40081787109</dd><dt><span>STATISTICS_SKIPFACTORX :</span></dt><dd>1</dd><dt><span>STATISTICS_SKIPFACTORY :</span></dt><dd>1</dd><dt><span>STATISTICS_STDDEV :</span></dt><dd>245.40573983926</dd><dt><span>_FillValue :</span></dt><dd>-3.4028230607370965e+38</dd><dt><span>scale_factor :</span></dt><dd>1.0</dd><dt><span>add_offset :</span></dt><dd>0.0</dd></dl></div></li></ul></div></div></div></div>
 </div>
 </section>
-<section id="reading-and-writing-multiband-satellite-data">
-<h2>Reading and writing multiband satellite data<a class="headerlink" href="#reading-and-writing-multiband-satellite-data" title="Permalink to this headline">#</a></h2>
-<p>The second example is Sentinel 1 multispectral data. These images consist of separate files for each of the bands.</p>
+<section class="tex2jax_ignore mathjax_ignore" id="raster-analysis">
+<h1>Raster analysis<a class="headerlink" href="#raster-analysis" title="Permalink to this headline">#</a></h1>
+<p>The terrain date are hard to interpret by looking at the elevation only. Meaningful terrain characteristics highlight different aspects of the terrain, such as slope and aspect (orientation of the slope), or simplify interpretation of the terrain. These raster analysis functions are typical for GIS software (e.g. QGIS, ArcGIS, PCRaster) and are also available in xarray-spatial.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datashader</span> <span class="k">as</span> <span class="nn">ds</span>
-<span class="kn">from</span> <span class="nn">datashader.transfer_functions</span> <span class="kn">import</span> <span class="n">shade</span>
-<span class="kn">from</span> <span class="nn">datashader.transfer_functions</span> <span class="kn">import</span> <span class="n">stack</span>
-<span class="kn">from</span> <span class="nn">datashader.transfer_functions</span> <span class="kn">import</span> <span class="n">dynspread</span>
-<span class="kn">from</span> <span class="nn">datashader.transfer_functions</span> <span class="kn">import</span> <span class="n">set_background</span>
-<span class="kn">from</span> <span class="nn">datashader.colors</span> <span class="kn">import</span> <span class="n">Elevation</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># calculate derived attributes from the digital elevation model</span>
+<span class="n">slope</span> <span class="o">=</span> <span class="n">xrs</span><span class="o">.</span><span class="n">slope</span><span class="p">(</span><span class="n">dem</span><span class="p">)</span>
+<span class="n">aspect</span> <span class="o">=</span> <span class="n">xrs</span><span class="o">.</span><span class="n">aspect</span><span class="p">(</span><span class="n">dem</span><span class="p">)</span>
+<span class="n">hillshade</span> <span class="o">=</span> <span class="n">xrs</span><span class="o">.</span><span class="n">hillshade</span><span class="p">(</span><span class="n">dem</span><span class="p">,</span> <span class="n">angle_altitude</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">azimuth</span><span class="o">=</span><span class="mi">225</span><span class="p">)</span>
+<span class="n">observer_x</span><span class="p">,</span> <span class="n">observer_y</span> <span class="o">=</span> <span class="mi">724000</span><span class="p">,</span> <span class="mi">4918000</span>
+<span class="n">viewshed</span> <span class="o">=</span> <span class="n">xrs</span><span class="o">.</span><span class="n">viewshed</span><span class="p">(</span><span class="n">dem</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">observer_x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">observer_y</span><span class="p">,</span> <span class="n">observer_elev</span><span class="o">=</span><span class="mf">1.8</span><span class="p">)</span>
+
+<span class="c1"># write output to scratch directory to open in QGIS</span>
+<span class="n">slope</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">to_raster</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;slope.tif&#39;</span><span class="p">))</span>
+<span class="n">aspect</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">to_raster</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;aspect.tif&#39;</span><span class="p">))</span>
+<span class="n">hillshade</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">to_raster</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;hillshade.tif&#39;</span><span class="p">))</span>
+<span class="n">viewshed</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">to_raster</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;viewshed.tif&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#stack(</span>
-<span class="c1">#    shade(hillshade(dem), cmap=[&quot;grey&quot;, &quot;white&quot;]),</span>
-<span class="c1">#    shade(dem, cmap=Elevation, alpha=128),)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## visualize the data</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">[[</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">],</span> <span class="p">[</span><span class="n">ax3</span><span class="p">,</span> <span class="n">ax4</span><span class="p">]]</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+
+<span class="c1"># hillshade</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">hillshade</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+<span class="n">dem</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Hillshade with DEM&#39;</span><span class="p">)</span>
+
+<span class="c1"># aspect</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">aspect</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;twilight_shifted&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Aspect&#39;</span><span class="p">)</span>
+
+<span class="c1"># slope</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">hillshade</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax3</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+<span class="n">slope</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax3</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Slope in degrees&#39;</span><span class="p">)</span>
+
+<span class="c1"># viewshed</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">hillshade</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax4</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+<span class="n">viewshed</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax4</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">observer_x</span><span class="p">,</span> <span class="n">observer_y</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Viewshed from </span><span class="si">{</span><span class="n">observer_x</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">observer_y</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Viewshed from 724000, 4918000&#39;)
+</pre></div>
+</div>
+<img alt="../_images/rasterbasics_8_1.png" src="../_images/rasterbasics_8_1.png" />
+</div>
+</div>
+<section id="exercise-1">
+<h2>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">#</a></h2>
+<p>The combination of different raster layers enables you to find the answers to specific spatial questions. Assume you are a rock climber standing at easting 721319 and northing 4921949.</p>
+<p><strong>Question 1</strong></p>
+<ol class="simple">
+<li><p>What is the slope in degrees of the steepest slope you can observe from this position?</p></li>
+<li><p>Rock climbers also climb overhangs with slopes that exceed 90 degrees. Can overhangs be represented in 2D raster data?</p></li>
+</ol>
+<p><strong>Challenge</strong>
+Extract the location of the steepest slope. Hint: use ‘nanmax’ on the viewshed slope data array, or a combination of ‘argmax’ and ‘isel’ to get the coordinates of the steepest visible slope. Export the location to a raster or vector file with a the spatial reference. Visualize in the notebook and confirm your answer using visualization in QGIS.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Note: to be moved to answer model</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+
+<span class="c1"># Answer to question 1.1 code</span>
+<span class="n">observer_x</span><span class="p">,</span> <span class="n">observer_y</span> <span class="o">=</span> <span class="mi">721319</span><span class="p">,</span> <span class="mi">4921949</span>
+<span class="n">viewshed</span> <span class="o">=</span> <span class="n">xrs</span><span class="o">.</span><span class="n">viewshed</span><span class="p">(</span><span class="n">dem</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">observer_x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">observer_y</span><span class="p">,</span> <span class="n">observer_elev</span><span class="o">=</span><span class="mf">1.6</span><span class="p">)</span>
+<span class="n">slopes_in_sight</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">viewshed</span><span class="o">.</span><span class="n">data</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">slope</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+<span class="n">max_slope_in_sight_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">slopes_in_sight</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The steepest slope in sight has a values of&#39;</span><span class="p">,</span> <span class="n">max_slope_in_sight_value</span><span class="p">,</span> <span class="s1">&#39;degrees&#39;</span><span class="p">)</span>
+
+<span class="c1"># Answer to question 1.1 text</span>
+<span class="c1"># a) the maximum slope is 80.78 degrees</span>
+<span class="c1"># b) No, continuous raster data can not represent overhangs, or even vertical slopes.</span>
+<span class="c1">#    The slope is calculated over the distance between two raster cells. </span>
+
+<span class="c1"># Answer to challenge:</span>
+<span class="c1"># To check, export the visible slopes and the maximum slope to tif files and open in QGIS</span>
+
+<span class="c1"># In raster format: </span>
+<span class="c1"># Note that you need to zoom in a lot before you see the single cell that represents the steepest visible slope.</span>
+<span class="n">slopes_in_sight_xr</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">slopes_in_sight</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="n">dem</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="n">dem</span><span class="o">.</span><span class="n">dims</span><span class="p">)</span>
+<span class="n">slopes_in_sight_xr</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">to_raster</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;slopes_in_sight.tif&#39;</span><span class="p">))</span>
+<span class="n">steepest_visible_slope_loc</span> <span class="o">=</span> <span class="n">slopes_in_sight</span> <span class="o">==</span> <span class="n">max_slope_in_sight_value</span>
+<span class="n">steepest_visible_slope_loc</span> <span class="o">=</span> <span class="n">steepest_visible_slope_loc</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+<span class="n">steepest_visible_slope_xr</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">steepest_visible_slope_loc</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="n">dem</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="n">dem</span><span class="o">.</span><span class="n">dims</span><span class="p">)</span>
+<span class="n">steepest_visible_slope_xr</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">to_raster</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;steepest_visible_slope_in_sight.tif&#39;</span><span class="p">))</span>
+
+<span class="c1"># In vector format</span>
+<span class="c1"># use argmax to get the indices of the maximum along the x and y dimensions</span>
+<span class="n">index_dict</span> <span class="o">=</span> <span class="n">slopes_in_sight_xr</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">])</span>
+
+<span class="c1"># get the coordinates of the maximum and convert to a geodataframe</span>
+<span class="n">coord_da</span> <span class="o">=</span> <span class="n">slopes_in_sight_xr</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">index_dict</span><span class="p">)</span>
+<span class="c1"># df_max = coord_da.to_dataframe(name=&#39;max_slope&#39;)</span>
+<span class="n">geodata</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;geometry&#39;</span><span class="p">:</span> <span class="n">Point</span><span class="p">(</span><span class="n">coord_da</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span> <span class="n">coord_da</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]),</span>
+           <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">coord_da</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+           <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">coord_da</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+           <span class="s1">&#39;max_slope&#39;</span><span class="p">:</span> <span class="n">max_slope_in_sight_value</span><span class="p">}</span>
+<span class="n">gdf_max</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span><span class="n">geodata</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">gdf_max</span><span class="o">.</span><span class="n">crs</span> <span class="o">=</span> <span class="n">dem</span><span class="o">.</span><span class="n">spatial_ref</span><span class="o">.</span><span class="n">crs_wkt</span>
+<span class="n">gdf_max</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;max_slope.geojson&#39;</span><span class="p">),</span> <span class="n">driver</span><span class="o">=</span><span class="s1">&#39;GeoJSON&#39;</span><span class="p">)</span>
+
+<span class="c1"># visualize to comparte to QGIS</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">hillshade</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+<span class="n">slopes_in_sight_xr</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">gdf_max</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">observer_x</span><span class="p">,</span> <span class="n">observer_y</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The steepest slope in sight has a values of 80.78018 degrees
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x2712c7eb310&gt;
+</pre></div>
+</div>
+<img alt="../_images/rasterbasics_10_2.png" src="../_images/rasterbasics_10_2.png" />
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="stacking-and-clipping-satellite-data">
+<h1>Stacking and clipping satellite data<a class="headerlink" href="#stacking-and-clipping-satellite-data" title="Permalink to this headline">#</a></h1>
+<p>The second example uses Landsat multispectral data. These images consist of separate files for each of the bands.
+Look at <a class="reference external" href="https://landsat.gsfc.nasa.gov/satellites/landsat-8/landsat-8-bands/">NASA’s Landsat band description</a> for the reason for inclusion of these bands in the Operational Land Imager (OLI).</p>
+<p><strong>Question 2</strong></p>
+<ol class="simple">
+<li><p>Which spectral band is used for vegetation health mapping</p></li>
+<li><p>Which bands can distinguish wet soil from dry soil?</p></li>
+</ol>
+<p>Load the band description from disk. Note only 30 m resolution bands are listed, so no thermal infrared and panchromatic bands.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ls_bands</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;Landsat_bands.csv&#39;</span><span class="p">))</span>
+<span class="c1"># wavelength (wl) in nanometer. Given for the minimum, maximum and midpoint of the spectral bands</span>
+<span class="n">ls_bands</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>band</th>
+      <th>wl_min_nm</th>
+      <th>wl_max_nm</th>
+      <th>wl_mid_nm</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>B1</td>
+      <td>435</td>
+      <td>451</td>
+      <td>443.0</td>
+      <td>Coastal_and_aerosol</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>B2</td>
+      <td>452</td>
+      <td>512</td>
+      <td>482.0</td>
+      <td>Blue</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>B3</td>
+      <td>533</td>
+      <td>590</td>
+      <td>561.5</td>
+      <td>Green</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>B4</td>
+      <td>636</td>
+      <td>673</td>
+      <td>654.5</td>
+      <td>Red</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>B5</td>
+      <td>851</td>
+      <td>879</td>
+      <td>865.0</td>
+      <td>NIR</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>B6</td>
+      <td>1566</td>
+      <td>1651</td>
+      <td>1608.5</td>
+      <td>SWIR1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>B7</td>
+      <td>2107</td>
+      <td>2294</td>
+      <td>2200.5</td>
+      <td>SWIR2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The storage of the bands in separate files precludes visualizing the data as multispectral band combinations in QGIS. Therefore the band have to be stacked, i.e. combined in a single multiband geotiff. This can be done by loading the different bands in an xarray DataSet and save the DataSet to disk. The function <code class="docutils literal notranslate"><span class="pre">stack_landsat_bands</span></code> below loads the bands into separate variables in an xarray DataSet. This enables writing to a stacked tif file with the full description of the band names. If you read the stacked image from disk again, the bands are read into an xarray DataArray and not in a DataSet. The band names are now stored as a tuple in the long_name attribute.</p>
+<p>Run the cell below and open the stacked image in QGIS.</p>
+<p><strong>Question 3</strong>  Does the <code class="docutils literal notranslate"><span class="pre">long_name</span></code> attribute of the xarray DataArray match the band names in QGIS?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create helper function </span>
+<span class="k">def</span> <span class="nf">stack_landsat_bands</span><span class="p">(</span><span class="n">band_path_template</span><span class="p">,</span> <span class="n">out_path</span><span class="p">,</span> <span class="n">bands</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Read the 30 m resolution files from disk and output with band names in long_format.</span>
+<span class="sd">    band_path: f-string of the path to the bands on disk. {band} should contain the band number</span>
+<span class="sd">    out_path:  path to the new output file</span>
+<span class="sd">    bands:     iterable of the band, e.g. [B2,B3]</span>
+<span class="sd">    labels:    iterable of long format names of the bands, e.g. [&#39;blue&#39;, &#39;green&#39;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># initiate the dataset</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">()</span>
+    
+    <span class="c1"># load the dataset with the bands</span>
+    <span class="k">for</span> <span class="n">band</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bands</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+        <span class="n">band_path</span> <span class="o">=</span> <span class="n">band_path_template</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;BANDX&#39;</span><span class="p">,</span> <span class="n">band</span><span class="p">)</span>
+        <span class="c1">#print(&#39;Data read from&#39;, band_path)</span>
+        <span class="n">band_x</span> <span class="o">=</span> <span class="n">rioxarray</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span><span class="n">band_path</span><span class="p">,</span> <span class="n">mask_and_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+        <span class="n">ds</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="n">band_x</span>
+    
+    <span class="c1"># write to disk</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Writing stacked bands to&#39;</span><span class="p">,</span> <span class="n">out_path</span><span class="p">)</span>
+    <span class="n">ds</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">to_raster</span><span class="p">(</span><span class="n">out_path</span><span class="p">,</span> <span class="n">compress</span><span class="o">=</span><span class="s1">&#39;LZW&#39;</span><span class="p">,</span> <span class="n">tiled</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1">#ls_2015.close() # for rerunning the cell</span>
+<span class="n">path_template</span> <span class="o">=</span> <span class="s1">&#39;../data/L8_OLI_2015_L2/LC08_L2SP_198024_20150803_20200908_02_T1_SR_BANDX.tif&#39;</span>
+<span class="n">stack_landsat_bands</span><span class="p">(</span><span class="n">path_template</span><span class="p">,</span> <span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;LS_stacked_2015.tif&#39;</span><span class="p">),</span> <span class="n">ls_bands</span><span class="o">.</span><span class="n">band</span><span class="p">,</span> <span class="n">ls_bands</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+
+<span class="n">ls_2015</span> <span class="o">=</span> <span class="n">rioxarray</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;LS_stacked_2015.tif&#39;</span><span class="p">),</span> <span class="n">mask_and_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ls_2015</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">12000</span><span class="p">,</span> <span class="n">add_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing stacked bands to ../scratch\LS_stacked_2015.tif
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.QuadMesh at 0x2712d31ec70&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>This dataset covers the largest part of the South of the Netherlands. To reduce the computation time for this practical, we will limit the extent of the Landsat image using rioxarray’s function <a class="reference external" href="https://corteva.github.io/rioxarray/stable/examples/clip_box.html"><code class="docutils literal notranslate"><span class="pre">clip_box</span></code></a>. This function takes the bounding box coordinates in the same spatial reference as the original data set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="mi">580750</span><span class="p">,</span> <span class="mi">670000</span><span class="p">,</span> <span class="mi">5745000</span><span class="p">,</span> <span class="mi">5820000</span>
+<span class="n">ls_2015_clip</span> <span class="o">=</span> <span class="n">ls_2015</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">clip_box</span><span class="p">(</span><span class="n">minx</span><span class="o">=</span><span class="n">xmin</span><span class="p">,</span> <span class="n">miny</span><span class="o">=</span><span class="n">ymin</span><span class="p">,</span> <span class="n">maxx</span><span class="o">=</span><span class="n">xmax</span><span class="p">,</span> <span class="n">maxy</span><span class="o">=</span><span class="n">ymax</span><span class="p">)</span>
+<span class="n">ls_2015_clip</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">to_raster</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;ls_2015_clip.tif&#39;</span><span class="p">),</span> <span class="n">compress</span><span class="o">=</span><span class="s1">&#39;LZw&#39;</span><span class="p">)</span>
+
+<span class="n">ls_2015_clip</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">12000</span><span class="p">,</span> <span class="n">add_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\rasterio\windows.py:310: RasterioDeprecationWarning: The height, width, and precision parameters are unused, deprecated, and will be removed in 2.0.0.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.QuadMesh at 0x20c81191b50&gt;
+</pre></div>
+</div>
+<img alt="../_images/rasterbasics_16_2.png" src="../_images/rasterbasics_16_2.png" />
+</div>
+</div>
+<p><strong>Question 4</strong> How much smaller is the clipped image in number of cells and as a fraction?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Answer</span>
+<span class="n">rows_clip</span><span class="p">,</span> <span class="n">cols_clip</span> <span class="o">=</span> <span class="n">ls_2015_clip</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+<span class="n">rows_full</span><span class="p">,</span> <span class="n">cols_full</span> <span class="o">=</span> <span class="n">ls_2015</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+<span class="n">reduction_fraction</span> <span class="o">=</span> <span class="p">(</span><span class="n">rows_clip</span> <span class="o">*</span> <span class="n">cols_clip</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">rows_full</span> <span class="o">*</span> <span class="n">cols_full</span><span class="p">)</span>
+<span class="n">reduction_nr_cells</span> <span class="o">=</span> <span class="p">(</span><span class="n">rows_full</span> <span class="o">*</span> <span class="n">cols_full</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">rows_clip</span> <span class="o">*</span> <span class="n">cols_clip</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The number of cells is reduced by a fraction of </span><span class="si">{</span><span class="n">reduction_fraction</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The reduction in number of cells is </span><span class="si">{</span><span class="n">reduction_nr_cells</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Note that this will speed up operations by a factor 8</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The number of cells is reduced by a fraction of 0.12106577064369575
+The reduction in number of cells is 54035805
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="reprojection">
-<h2>Reprojection<a class="headerlink" href="#reprojection" title="Permalink to this headline">#</a></h2>
+<section class="tex2jax_ignore mathjax_ignore" id="visualizing-multispectral-images">
+<h1>Visualizing multispectral images<a class="headerlink" href="#visualizing-multispectral-images" title="Permalink to this headline">#</a></h1>
+<p>Now that we have a manageable multispectral images, we can explore remote sensing data visualization. A good first impression is to plot the data of all bands individually using xarray’s <code class="docutils literal notranslate"><span class="pre">imshow</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ls_2015</span> <span class="o">=</span> <span class="n">ls_2015_clip</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="c1"># work with the clipped data.</span>
+
+<span class="n">ls_2015</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">col</span><span class="o">=</span><span class="s1">&#39;band&#39;</span><span class="p">,</span> <span class="n">col_wrap</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">6000</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">14000</span><span class="p">,</span>
+                    <span class="n">size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                    <span class="n">add_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">add_colorbar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># needed due to bug in plot function (2022)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;bands.jpg&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/rasterbasics_21_0.png" src="../_images/rasterbasics_21_0.png" />
+</div>
+</div>
+<p>There are many interesting and useful components to note from this figure:</p>
+<ol class="simple">
+<li><p>Band 5 (Near Infrared) shows a much higher reflectivity than the visual bands (1-4) and short wave infrared bands (6-7).</p></li>
+<li><p>Water has a lowest reflectivity in all bands</p></li>
+<li><p>The highest reflectivity values in all bands (set <code class="docutils literal notranslate"><span class="pre">vmax=30000</span></code>) are found in the western part.</p></li>
+<li><p>The land-water boundary along the coast shows up as a very crips line in band 5 compared to band 3.</p></li>
+</ol>
+<p><strong>Question 5</strong> What land land cover has the highest reflectivity values? Use Google Earth to get independent confirmation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Answer: Greenhouses with glass roofs show up extremely high. </span>
+<span class="c1"># Fun fact: in a global land cover classification, it was mistaken for a glacier.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>A more complete overview of the data comes from: band combinations, the histogram, the feature space and the spectral profile. Here, we will look at each of these options. Run the cell below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ls_2015</span> <span class="o">=</span> <span class="n">ls_2015_clip</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="c1"># work with the clipped data.</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">[[</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">],</span> <span class="p">[</span><span class="n">ax3</span><span class="p">,</span> <span class="n">ax4</span><span class="p">],</span> <span class="p">[</span><span class="n">ax5</span><span class="p">,</span> <span class="n">ax6</span><span class="p">]]</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">15</span><span class="p">))</span>
+
+<span class="c1"># True color RGB</span>
+<span class="n">ls_2015</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">,:,:][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">,</span> <span class="n">rgb</span><span class="o">=</span><span class="s1">&#39;band&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">6000</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">12000</span><span class="p">,</span> <span class="n">add_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;True color R-G-B image&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+
+<span class="c1"># False color image</span>
+<span class="n">ls_2015</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">,:,:][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span> <span class="n">rgb</span><span class="o">=</span><span class="s1">&#39;band&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">6000</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">24000</span><span class="p">,</span> <span class="n">add_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;False color NIR-R-G image&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+
+<span class="c1"># Histogram 7 bands</span>
+<span class="n">bands</span> <span class="o">=</span> <span class="n">ls_bands</span><span class="o">.</span><span class="n">label</span>
+<span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">30000</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+<span class="n">hist_data</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">band</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bands</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">band</span><span class="p">)</span>
+    <span class="n">hist_data</span><span class="p">[</span><span class="n">band</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">ls_2015</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,:,:]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">30000</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">hist_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">hist_data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">bands</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">bins</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">hist_df</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax3</span><span class="p">,</span>
+                  <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;tab:blue&#39;</span><span class="p">,</span> <span class="s1">&#39;tab:green&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;magenta&#39;</span><span class="p">,</span> <span class="s1">&#39;darkviolet&#39;</span><span class="p">,</span> <span class="s1">&#39;lightcoral&#39;</span><span class="p">])</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Histogram of the reflectivity values&#39;</span><span class="p">)</span>
+
+<span class="c1"># Histogram 4 bands</span>
+<span class="n">hist_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax4</span><span class="p">,</span>
+                              <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">,</span> <span class="s1">&#39;tab:green&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;magenta&#39;</span><span class="p">])</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Histogram of the reflectivity values&#39;</span><span class="p">)</span>
+
+<span class="c1"># Spectral profile</span>
+<span class="n">xcoord</span><span class="p">,</span> <span class="n">ycoord</span> <span class="o">=</span> <span class="mi">641860</span><span class="p">,</span> <span class="mi">5771627</span> 
+<span class="n">profile_da</span> <span class="o">=</span> <span class="n">ls_2015</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">xcoord</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">ycoord</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
+<span class="n">profile_df</span> <span class="o">=</span> <span class="n">profile_da</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;spectral values&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">bands</span><span class="p">)</span>
+<span class="n">profile_df</span><span class="p">[</span><span class="s1">&#39;spectral values&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax5</span><span class="p">)</span>
+<span class="n">ax5</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Spectral profile at </span><span class="si">{</span><span class="n">xcoord</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">ycoord</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Feature space</span>
+<span class="n">hb</span> <span class="o">=</span> <span class="n">ax6</span><span class="o">.</span><span class="n">hexbin</span><span class="p">(</span><span class="n">ls_2015</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">ls_2015</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span>
+           <span class="n">vmax</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">mincnt</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+           <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;inferno&#39;</span><span class="p">)</span>
+<span class="n">ax6</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">ax6</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;2D histogram of the Red-NIR feature space&#39;</span><span class="p">)</span>
+<span class="n">ax6</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;NIR - band 5&#39;</span><span class="p">)</span>
+<span class="n">ax6</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Red - band 4&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0 Coastal_and_aerosol
+1 Blue
+2 Green
+3 Red
+4 NIR
+5 SWIR1
+6 SWIR2
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;Red - band 4&#39;)
+</pre></div>
+</div>
+<img alt="../_images/rasterbasics_25_2.png" src="../_images/rasterbasics_25_2.png" />
+</div>
+</div>
+<section id="exercise-2">
+<h2>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">#</a></h2>
+<p>The data folder contains a second Landsat image, which was collected in 2020 (../data/L8_OLI_2020_L2). Carry out the following steps:</p>
+<ul class="simple">
+<li><p>Stack the bands of the 2020 image and write to a separate file, e.g.’LS_stacked_2020.tif’.</p></li>
+<li><p>Clip the image to the same extent as the 2015 image and save to ‘LS_2020_clip.tif’</p></li>
+<li><p>Open both images in QGIS.</p></li>
+<li><p>Visualize the images as multiband image in true-color R-G-B and as false-color NIR-R-G.</p></li>
+<li><p>Zoom to the following locations in QGIS and inspect the changes between 2015 and 2020.</p></li>
+</ul>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Location</p></th>
+<th class="text-align:right head"><p>Easting</p></th>
+<th class="text-align:right head"><p>Northing</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Utrecht-west</p></td>
+<td class="text-align:right"><p>641860</p></td>
+<td class="text-align:right"><p>5771627</p></td>
+</tr>
+<tr class="row-odd"><td><p>Hilversum-south</p></td>
+<td class="text-align:right"><p>649625</p></td>
+<td class="text-align:right"><p>5785787</p></td>
+</tr>
+<tr class="row-even"><td><p>Oostvaardersplassen</p></td>
+<td class="text-align:right"><p>657599</p></td>
+<td class="text-align:right"><p>5813391</p></td>
+</tr>
+<tr class="row-odd"><td><p>Flevoland polder</p></td>
+<td class="text-align:right"><p>664715</p></td>
+<td class="text-align:right"><p>5802513</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Question 5</strong></p>
+<ol class="simple">
+<li><p>What changes in spectral values have occurred in these location? Use the ‘Identify Features’ tool (ctrl-shft-i). In the ‘Identify results’ panel, set Mode to Top Down, and View to Graph. to jointly visualize the band values.</p></li>
+<li><p>Which of these changes in spectral values are due to land cover changes? You can use OpenStreetmap or Google Earth as reference.</p></li>
+</ol>
+<p><strong>Challenge</strong> Write a script to visualize the spectral profiles for each of these locations in both years. Use the band means of the landsat bands on the x-axis. Hints:</p>
+<ul class="simple">
+<li><p>to extract values at specific coordinates in the xarray DataSet, you can use ‘.sel’.</p></li>
+<li><p>use seaborn’s relplot for plotting the relation between band wavelength and reflectivity.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ls_2020</span> <span class="o">=</span> <span class="n">rioxarray</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;LS_stacked_2020.tif&#39;</span><span class="p">))</span>
+<span class="n">ls_2020_clip</span> <span class="o">=</span> <span class="n">ls_2020</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">clip_box</span><span class="p">(</span><span class="n">minx</span><span class="o">=</span><span class="n">xmin</span><span class="p">,</span> <span class="n">miny</span><span class="o">=</span><span class="n">ymin</span><span class="p">,</span> <span class="n">maxx</span><span class="o">=</span><span class="n">xmax</span><span class="p">,</span> <span class="n">maxy</span><span class="o">=</span><span class="n">ymax</span><span class="p">)</span>
+<span class="n">ls_2020_clip</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">to_raster</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;ls_2020_clip2.tif&#39;</span><span class="p">),</span> <span class="n">compress</span><span class="o">=</span><span class="s1">&#39;LZw&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\rasterio\windows.py:310: RasterioDeprecationWarning: The height, width, and precision parameters are unused, deprecated, and will be removed in 2.0.0.
+  warnings.warn(
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## To be moved to the answer section</span>
+<span class="n">ls_2020</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">ls_2020_clip</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+
+<span class="c1"># answer Exercise 2:</span>
+<span class="c1"># Apply to stack_landsat_bands function to the 2020 data set</span>
+<span class="n">path_template</span> <span class="o">=</span> <span class="s1">&#39;../data/L8_OLI_2020_L2/LC08_L2SP_198024_20200731_20200908_02_T1_SR_BANDX.TIF&#39;</span>
+<span class="n">stack_landsat_bands</span><span class="p">(</span><span class="n">path_template</span><span class="p">,</span> <span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;LS_stacked_2020.tif&#39;</span><span class="p">),</span> <span class="n">ls_bands</span><span class="o">.</span><span class="n">band</span><span class="p">,</span> <span class="n">ls_bands</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+<span class="n">ls_2020</span> <span class="o">=</span> <span class="n">rioxarray</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;LS_stacked_2020.tif&#39;</span><span class="p">))</span>
+<span class="n">ls_2020_clip</span> <span class="o">=</span> <span class="n">ls_2020</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">clip_box</span><span class="p">(</span><span class="n">minx</span><span class="o">=</span><span class="n">xmin</span><span class="p">,</span> <span class="n">miny</span><span class="o">=</span><span class="n">ymin</span><span class="p">,</span> <span class="n">maxx</span><span class="o">=</span><span class="n">xmax</span><span class="p">,</span> <span class="n">maxy</span><span class="o">=</span><span class="n">ymax</span><span class="p">)</span>
+<span class="n">ls_2020_clip</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">to_raster</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;ls_2020_clip.tif&#39;</span><span class="p">),</span> <span class="n">compress</span><span class="o">=</span><span class="s1">&#39;LZw&#39;</span><span class="p">)</span>
+
+
+<span class="c1"># Changes per location:</span>
+<span class="c1">#     Utrecht-west, change in land cover from meadow to bare earth due to the building site for housing of Leidsche Rijn</span>
+<span class="c1">#     Hilversum-south, change in land cover from paved to bare earth after road removal</span>
+<span class="c1">#     Oostvaardersplassen, no change in land cover, but increase in reflectivity due to algea or sediment</span>
+<span class="c1">#     Flevoland polder, change in land cover from bare to crop, but no change is land use. Both are agricultural land use.</span>
+
+<span class="c1"># Challenge</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">ls_2015</span> <span class="o">=</span> <span class="n">rioxarray</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;LS_2015_clip.tif&#39;</span><span class="p">))</span>
+<span class="n">ls_2020</span> <span class="o">=</span> <span class="n">rioxarray</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;LS_2020_clip.tif&#39;</span><span class="p">))</span>
+
+
+<span class="n">locs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Location&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Utrecht-west&#39;</span><span class="p">,</span> <span class="s1">&#39;Hilversum-south&#39;</span><span class="p">,</span> <span class="s1">&#39;Oostvaardersplassen&#39;</span><span class="p">,</span> <span class="s1">&#39;Flevoland polder&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;Easting&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">641860</span><span class="p">,</span> <span class="mi">649625</span><span class="p">,</span> <span class="mi">657599</span><span class="p">,</span> <span class="mi">664715</span><span class="p">],</span>
+        <span class="s1">&#39;Northing&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5771627</span><span class="p">,</span> <span class="mi">5785787</span><span class="p">,</span> <span class="mi">5813391</span><span class="p">,</span> <span class="mi">5802513</span><span class="p">]</span>
+       <span class="p">}</span>
+<span class="n">locs_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">locs</span><span class="p">)</span>
+
+<span class="c1"># write points to geojson file for comparison in QGIS.</span>
+<span class="n">locs_gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span><span class="n">locs_df</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+<span class="n">locs_gdf</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">locs_gdf</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">Point</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">Easting</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">Northing</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">locs_gdf</span><span class="o">.</span><span class="n">crs</span> <span class="o">=</span> <span class="n">ls_2015</span><span class="o">.</span><span class="n">spatial_ref</span><span class="o">.</span><span class="n">crs_wkt</span>
+<span class="n">locs_gdf</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;locs_profiles.geojson&#39;</span><span class="p">),</span> <span class="n">driver</span><span class="o">=</span><span class="s1">&#39;GeoJSON&#39;</span><span class="p">)</span>
+
+<span class="c1"># set up the output dataframe</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">locs_df</span><span class="p">,</span> <span class="n">locs_df</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">result</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="p">[</span><span class="mi">2015</span><span class="p">]</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="p">[</span><span class="mi">2020</span><span class="p">]</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="c1"># compile the spectral profiles and join with results</span>
+<span class="n">profiles</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">band_names</span> <span class="o">=</span> <span class="n">ls_bands</span><span class="o">.</span><span class="n">label</span>
+<span class="n">da_dict</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2015</span><span class="p">:</span> <span class="n">ls_2015</span><span class="p">,</span>
+           <span class="mi">2020</span><span class="p">:</span> <span class="n">ls_2020</span><span class="p">}</span>
+
+<span class="k">for</span> <span class="n">location</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">year</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
+<span class="c1">#     print(location, x, y, year)</span>
+    <span class="n">da</span> <span class="o">=</span> <span class="n">da_dict</span><span class="p">[</span><span class="n">year</span><span class="p">]</span>
+    <span class="n">prof</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
+    <span class="n">profiles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prof</span><span class="p">)</span>
+<span class="n">profiles_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">profiles</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="n">band_names</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">profiles_df</span><span class="p">)</span>
+
+<span class="c1"># make a tidy dataframe</span>
+<span class="n">tidy</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">tidy</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">tidy</span><span class="p">,</span> <span class="n">id_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Location&#39;</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">],</span> <span class="n">var_name</span><span class="o">=</span><span class="s1">&#39;band_name&#39;</span><span class="p">,</span> <span class="n">value_name</span><span class="o">=</span><span class="s1">&#39;reflectivity&#39;</span><span class="p">)</span>
+<span class="n">tidy</span> <span class="o">=</span> <span class="n">tidy</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">ls_bands</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;band_name&#39;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">)</span>
+
+<span class="c1"># vizualize using seaborn</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">tidy</span><span class="p">,</span> 
+            <span class="n">x</span><span class="o">=</span><span class="s1">&#39;wl_mid_nm&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;reflectivity&#39;</span><span class="p">,</span> <span class="c1"># change to x=&#39;band_name&#39; for labelled x axis</span>
+            <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;Set1&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+            <span class="n">markers</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="n">dashes</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">col</span><span class="o">=</span><span class="s1">&#39;Location&#39;</span><span class="p">,</span> <span class="n">col_wrap</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">height</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing stacked bands to ../scratch\LS_stacked_2020.tif
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\rasterio\windows.py:310: RasterioDeprecationWarning: The height, width, and precision parameters are unused, deprecated, and will be removed in 2.0.0.
+  warnings.warn(
+C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\pandas\core\dtypes\cast.py:122: ShapelyDeprecationWarning: The array interface is deprecated and will no longer work in Shapely 2.0. Convert the &#39;.coords&#39; to a numpy array instead.
+  arr = construct_1d_object_array_from_listlike(values)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x1f227931e80&gt;
+</pre></div>
+</div>
+<img alt="../_images/rasterbasics_28_3.png" src="../_images/rasterbasics_28_3.png" />
+</div>
+</div>
 </section>
-<section id="stacking-and-visualisation">
-<h2>Stacking and visualisation<a class="headerlink" href="#stacking-and-visualisation" title="Permalink to this headline">#</a></h2>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="spectral-ratioing">
+<h1>Spectral ratioing<a class="headerlink" href="#spectral-ratioing" title="Permalink to this headline">#</a></h1>
+<p>Spectral ratioing refers to enhancement techniques by combining pixel values from different spectral bands. Ratio images are prepared by dividing the digital numbers in one band by the corresponding digital numbers in another band. The most widely used ratio techniques are ratios to enhance the vegetation cover or to distinguish bare soil from vegetation. Most vegetation indices combine one infrared spectral band with one visible band.</p>
+<p>Vegetation indices are often used to estimate from remote sensing images the leaf area index, the vegetation cover or the biomass for specific areas. Although there is a correlation between biomass, leaf area index, vegetation cover and spectral vegetation indices, some caution is necessary. The relations between spectral indices and these vegetation properties is often area-specific (that means that functions developed in one study area cannot be used directly in other areas), the condition of the soil and the type of soil beneath the vegetation or crop has a certain impact on the value of the spectral indices: although the vegetation cover remains the same, the value of the spectral index might change due to a change in underlying soil. Some vegetation indices take soil condition into account using information from the SWIR bands.</p>
+<p>Spectral indices used for these purposes are e.g.:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Vegetation index</p></th>
+<th class="head"><p>Formula</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Simple ratio (SR)</p></td>
+<td><p>SR = NIR / R</p></td>
+</tr>
+<tr class="row-odd"><td><p>Normalized difference vegetation index (NDVI)</p></td>
+<td><p>NDVI = (NIR–R) / (NIR+R)</p></td>
+</tr>
+<tr class="row-even"><td><p>Perpendicular vegetation index (PVI)</p></td>
+<td><p>PVI = (NIR-aR-b) / (a<sup>2</sup>+1)<sup>½</sup></p></td>
+</tr>
+<tr class="row-odd"><td><p>Soil adjusted vegetation index (SAVI)</p></td>
+<td><p>SAVI = (NIR–R) / (NIR+R+L)(1+L)</p></td>
+</tr>
+<tr class="row-even"><td><p>Transformed soil adjusted vegetation index (TSAVI)</p></td>
+<td><p>TSAVI = a(NIR-aR-b) / (R+a(NIR-b)+X(1+a<sup>2</sup>))</p></td>
+</tr>
+<tr class="row-odd"><td><p>Modified normalized difference vegetation index (MNDVI)</p></td>
+<td><p>MNDVI = NDVI * (SWIR<sub>max</sub> – SWIR) / (SWIR<sub>max</sub>–SWIR<sub>min</sub>)</p></td>
+</tr>
+<tr class="row-even"><td><p>Enhanced vegetation index (EVI)</p></td>
+<td><p>EVI = 2.5*((NIR–R) / (NIR + 6R - 7.5B + 1))</p></td>
+</tr>
+<tr class="row-odd"><td><p>Reduced simple ratio (RSR)</p></td>
+<td><p>RSR = SR * (SWIR<sub>max</sub>–SWIR) / (SWIR<sub>max</sub>–SWIR<sub>min</sub>)</p></td>
+</tr>
+<tr class="row-even"><td><p>Moisture adjusted vegetation index (MAVI)</p></td>
+<td><p>MAVI = (NIR–R) / (NIR+R+SWIR)</p></td>
+</tr>
+</tbody>
+</table>
+<p>Where B, R, NIR, and SWIR are the surface reflectance in the blue, red, near infrared, and shortwave infrared bands, respectively. SWIR<sub>max</sub> and SWIR<sub>min</sub> are the maximum and minimum surface reflectance in the SWIR band, respectively. SWIR<sub>max</sub> and SWIR<sub>min</sub> are defined as the 1% minimum and maximum cutoff points in the histogram of the SWIR band reflectance here. a and b are the slope and intercept of the soil line, respectively. L, X, Y, and Z are soil background adjusted factors. c is an atmospheric self-correcting factor which depends on aerosol types.</p>
+<p>from <a class="reference external" href="https://doi.org/10.1371/journal.pone.0102560">https://doi.org/10.1371/journal.pone.0102560</a></p>
+<p>The code below gives and example.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># starting with the spectral profiles of the polder in Flevoland</span>
+<span class="c1"># constract the DataFrame</span>
+<span class="n">sp</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;band&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="s1">&#39;NIR&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span> <span class="s1">&#39;SWIR1&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="s1">&#39;SWIR2&#39;</span><span class="p">},</span> 
+      <span class="s1">&#39;wl_min_nm&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="mi">435</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span> <span class="mi">452</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mi">533</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="mi">636</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="mi">851</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span> <span class="mi">1566</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="mi">2107</span><span class="p">},</span> 
+      <span class="s1">&#39;wl_mid_nm&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="mf">443.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span> <span class="mf">482.0</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mf">561.5</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="mf">654.5</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="mf">865.0</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span> <span class="mf">1608.5</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="mf">2200.5</span><span class="p">},</span> 
+      <span class="s1">&#39;wl_max_nm&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="mi">451</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mi">590</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="mi">673</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="mi">879</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span> <span class="mi">1651</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="mi">2294</span><span class="p">},</span> 
+      <span class="s1">&#39;reflectivity_2015&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="mf">9549.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span> <span class="mf">10415.0</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mf">11825.0</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="mf">13393.0</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="mf">17356.0</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span> <span class="mf">18720.0</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="mf">14553.0</span><span class="p">},</span> 
+      <span class="s1">&#39;reflectivity_2020&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="mf">7998.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span> <span class="mf">8103.0</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mf">9195.0</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="mf">8258.0</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="mf">26513.0</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span> <span class="mf">12156.0</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="mf">9103.0</span><span class="p">}}</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">sp</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">band</span>
+
+<span class="c1"># plot the spectral profiles</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">reflectivity_2015</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">wl_min_nm</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">wl_max_nm</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;tab:red&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">reflectivity_2020</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">wl_min_nm</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">wl_max_nm</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;tab:blue&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="s1">&#39;wl_mid_nm&#39;</span><span class="p">,</span> <span class="s1">&#39;reflectivity_2015&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;-.&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:red&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="s1">&#39;wl_mid_nm&#39;</span><span class="p">,</span> <span class="s1">&#39;reflectivity_2020&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;-.&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">band</span><span class="p">,</span> <span class="n">wl</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">band</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">wl_mid_nm</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="mi">6500</span><span class="p">,</span> <span class="n">band</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;Cropland&#39;</span><span class="p">,</span> <span class="n">xy</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1600</span><span class="p">,</span> <span class="mi">12500</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">1750</span><span class="p">,</span><span class="mi">14000</span><span class="p">),</span> <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.05</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;Bare land&#39;</span><span class="p">,</span> <span class="n">xy</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1600</span><span class="p">,</span> <span class="mi">19000</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">1750</span><span class="p">,</span><span class="mi">21000</span><span class="p">),</span> <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;tab:red&#39;</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.05</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">6000</span><span class="p">,</span> <span class="mi">27000</span><span class="p">)</span>
+
+<span class="c1"># calculate and prit the NDVI for both years</span>
+<span class="k">def</span> <span class="nf">NDVI</span><span class="p">(</span><span class="n">Red</span><span class="p">,</span> <span class="n">NIR</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">NIR</span> <span class="o">-</span> <span class="n">Red</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">NIR</span> <span class="o">+</span> <span class="n">Red</span><span class="p">)</span>
+
+<span class="n">ndvi_2015</span> <span class="o">=</span> <span class="n">NDVI</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;reflectivity_2015&#39;</span><span class="p">],</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;NIR&#39;</span><span class="p">,</span> <span class="s1">&#39;reflectivity_2015&#39;</span><span class="p">])</span>
+<span class="n">ndvi_2020</span> <span class="o">=</span> <span class="n">NDVI</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;reflectivity_2020&#39;</span><span class="p">],</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;NIR&#39;</span><span class="p">,</span> <span class="s1">&#39;reflectivity_2020&#39;</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;NDVI values for 2015 and 2020: &#39;</span><span class="p">,</span> <span class="n">ndvi_2015</span><span class="p">,</span> <span class="n">ndvi_2020</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NDVI values for 2015 and 2020:  0.1288822400728479 0.5250064709096661
+</pre></div>
+</div>
+<img alt="../_images/rasterbasics_30_1.png" src="../_images/rasterbasics_30_1.png" />
+</div>
+</div>
+<p>The spectral profiles above show the change from bare land in 2015 to cropland in 2020. The bare land has higher values in the red band and lower values in near infrared when compared to cropland. This leads to a lower NDVI for bare land than for cropland.</p>
+<p>The same function can be used to calculate the NDVI for a whole multispectral image. The simplest method is to select the proper bands from the data array and do the band math in numpy. However, in this case the metadata with the crs are lost and saving to disk becomes more complicated. Therefore, we will use an expanded version to work with xarray.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">NDVI_da</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">red_band_nr</span><span class="p">,</span> <span class="n">nir_band_nr</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the Normalized Difference Vegetation Index from an xarray data array.</span>
+<span class="sd">    da: xarray DataArray, with multispectral data in bands. Numbering starts at 1.</span>
+<span class="sd">    red_band_nr: int, band number of the red band</span>
+<span class="sd">    nir_band_nr: int, band number of the nir band</span>
+<span class="sd">    </span>
+<span class="sd">    Returns a DataArray with a single band representing the NDVI</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">red</span> <span class="o">=</span> <span class="n">da</span><span class="p">[</span><span class="n">red_band_nr</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">nir</span> <span class="o">=</span> <span class="n">da</span><span class="p">[</span><span class="n">nir_band_nr</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">ndvi</span> <span class="o">=</span> <span class="p">(</span><span class="n">nir</span> <span class="o">-</span> <span class="n">red</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">nir</span> <span class="o">+</span> <span class="n">red</span><span class="p">)</span>
+    <span class="n">ndvi</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;long_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;NDVI&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ndvi</span>
+
+
+<span class="n">ls_2015</span> <span class="o">=</span> <span class="n">rioxarray</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;LS_2015_clip.tif&#39;</span><span class="p">))</span>
+<span class="n">ls_2020</span> <span class="o">=</span> <span class="n">rioxarray</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;LS_2020_clip.tif&#39;</span><span class="p">))</span>
+<span class="n">ndvi_2015</span> <span class="o">=</span> <span class="n">NDVI_da</span><span class="p">(</span><span class="n">ls_2015</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">ndvi_2020</span> <span class="o">=</span> <span class="n">NDVI_da</span><span class="p">(</span><span class="n">ls_2020</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">ndvi_2015</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">to_raster</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;ndvi_2015.tif&#39;</span><span class="p">),</span> <span class="n">compress</span><span class="o">=</span><span class="s1">&#39;LZW&#39;</span><span class="p">)</span>
+<span class="n">ndvi_2020</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">to_raster</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;ndvi_2020.tif&#39;</span><span class="p">),</span> <span class="n">compress</span><span class="o">=</span><span class="s1">&#39;LZW&#39;</span><span class="p">)</span>
+<span class="n">ndvi_2015</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Question 6</strong> Open the NDVI image of 2015 in QGIS. What is are typical values of NDVI for forest, crops, bare earth and builtup areas?</p>
+<p>Answer question 6:</p>
+<ul class="simple">
+<li><p>Forest: around 0.3</p></li>
+<li><p>Crops: around 0.4</p></li>
+<li><p>Bare earth: around 0</p></li>
+<li><p>Builtup areas: around 0.05</p></li>
+</ul>
+<section id="exercise-3">
+<h2>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">#</a></h2>
+<p>Create a new function to calculate the Enhance Vegetation Index based on the <code class="docutils literal notranslate"><span class="pre">NDVI_da</span></code> function defined above. Calculate the NDVI and EVI for 2015 and 2020 and write them to disk. Open in QGIS. Note that the EVI has large outliers, so you need to limit the range of values between 0 and 4 to see a meaningful pattern.</p>
+<p><strong>Question 7</strong> Compare the NDVI and EVI values for the following places</p>
+<ol class="simple">
+<li><p>Surfzone along the coast.</p></li>
+<li><p>Cropland vs forest. Is the EVI higher for forest or for cropland? Is the NDVI higher or lower for cropland than for forest?</p></li>
+<li><p>Zoom in on Amsterdam. Which index show the the least noise?</p></li>
+<li><p>Based on these observations, which index do you prefer to characterize vegetation? Motivate your choice</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># answer to question 7</span>
+
+<span class="k">def</span> <span class="nf">EVI_da</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">blue_band_nr</span><span class="p">,</span> <span class="n">red_band_nr</span><span class="p">,</span> <span class="n">nir_band_nr</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the Moisture Adjusted Vegetation Index from an xarray data array.</span>
+<span class="sd">    da: xarray DataArray, with multispectral data in bands. Numbering starts at 1.</span>
+<span class="sd">    blue_band_nr: int, band number of the blue band</span>
+<span class="sd">    red_band_nr: int, band number of the red band    </span>
+<span class="sd">    nir_band_nr: int, band number of the nir band</span>
+<span class="sd">    </span>
+<span class="sd">    Returns a DataArray with a single band representing the NDVI</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">blue</span> <span class="o">=</span> <span class="n">da</span><span class="p">[</span><span class="n">blue_band_nr</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">red</span> <span class="o">=</span> <span class="n">da</span><span class="p">[</span><span class="n">red_band_nr</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">nir</span> <span class="o">=</span> <span class="n">da</span><span class="p">[</span><span class="n">nir_band_nr</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">evi</span> <span class="o">=</span> <span class="mf">2.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">nir</span> <span class="o">-</span> <span class="n">red</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">nir</span> <span class="o">+</span> <span class="mi">6</span><span class="o">*</span><span class="n">red</span> <span class="o">-</span> <span class="mf">7.5</span><span class="o">*</span><span class="n">blue</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">evi</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;long_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;EVI&#39;</span><span class="p">)</span>
+    <span class="c1">#limit values between 0 and 7</span>
+    <span class="n">evi_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">evi</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">evi_min_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">evi_max</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">evi_min_max</span>
+
+<span class="n">ls_2015</span> <span class="o">=</span> <span class="n">rioxarray</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;LS_2015_clip.tif&#39;</span><span class="p">))</span>
+<span class="n">ndvi_2015</span> <span class="o">=</span> <span class="n">NDVI_da</span><span class="p">(</span><span class="n">ls_2015</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">evi_2015</span> <span class="o">=</span> <span class="n">EVI_da</span><span class="p">(</span><span class="n">ls_2015</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="n">ndvi_2015</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">to_raster</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;ndvi_2015.tif&#39;</span><span class="p">),</span> <span class="n">compress</span><span class="o">=</span><span class="s1">&#39;LZW&#39;</span><span class="p">)</span>
+<span class="n">evi_2015</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">to_raster</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;evi_2015.tif&#39;</span><span class="p">),</span> <span class="n">compress</span><span class="o">=</span><span class="s1">&#39;LZW&#39;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">[</span><span class="n">ax0</span><span class="p">,</span> <span class="n">ax1</span><span class="p">]</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="n">ndvi_2015</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax0</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+<span class="n">ax0</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">evi_2015</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+
+<span class="c1"># # Answers</span>
+<span class="c1"># 1. The seaward side of the surfzone shows increasing EVI values and decreasing NDVI values. </span>
+<span class="c1"># 2. For the EVI forest is higher than cropland. For NDVI it is the other way around</span>
+<span class="c1"># 3. The EVI shows a noisy pattern for Amsterdam with very high values neighbouring low ones.</span>
+<span class="c1"># 4. Looking just at the vegetation, the range in values between forest, meadows and cropland is larger for EVI, </span>
+<span class="c1">#    which means less overlap between the different classes. For that purpose, EVI works better</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/rasterbasics_36_0.png" src="../_images/rasterbasics_36_0.png" />
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="homogenisation-through-mosaicking-reprojecting-and-resampling">
+<h1>Homogenisation through mosaicking, reprojecting and resampling<a class="headerlink" href="#homogenisation-through-mosaicking-reprojecting-and-resampling" title="Permalink to this headline">#</a></h1>
+<p>Raster data sets often have different projections, resolutions and extent. If you want to analyse combinations of these sets, the data need to be homogenised, which means that the data need to have the same, projection, extent and cell size. Here, we will go through the steps to homogenize two datasets in order to determine whether there is a relationship between the EVI and the terrain height in this part of the Netherlands. That means that we want to extract the mean and standard deviation of the different height intervals. This can be done with the following steps:</p>
+<ol class="simple">
+<li><p>Reprojecting the satellite data to RD</p></li>
+<li><p>Mosaicking a set of terrain height tiles of the national lidar campaign into a single DEM</p></li>
+<li><p>Clip the dem to the extent of the satellite data</p></li>
+<li><p>Reclassify the DEM into zones of terrain height intervals</p></li>
+<li><p>Calculate the mean and standard deviation of the EVI for each height interval using zonal statistics.</p></li>
+</ol>
+<section id="reprojecting-raster-data">
+<h2>Reprojecting raster data<a class="headerlink" href="#reprojecting-raster-data" title="Permalink to this headline">#</a></h2>
+<p>The spatial reference, or coordinate reference system (crs) for the Netherlands is called <code class="docutils literal notranslate"><span class="pre">Amersfoort</span></code> or <code class="docutils literal notranslate"><span class="pre">RD</span> <span class="pre">New</span></code> and you can find the details of this projection on <a class="reference external" href="https://www.spatialreference.org/ref/epsg/28992/">spatialreference.org</a>. A crs can be referred to by its EPSG code. For <code class="docutils literal notranslate"><span class="pre">RD</span> <span class="pre">New</span></code> the EPSG code is 28992.</p>
+<p>Run the cell below and note that image has rotated from the reprojection.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ls_2015</span> <span class="o">=</span> <span class="n">rioxarray</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;LS_2015_clip.tif&#39;</span><span class="p">))</span>
+<span class="n">ls_2015_RD</span> <span class="o">=</span> <span class="n">ls_2015</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">reproject</span><span class="p">(</span><span class="s2">&quot;EPSG:28992&quot;</span><span class="p">)</span>
+<span class="n">ls_2015_RD</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">to_raster</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;ls_2015_RD.tif&#39;</span><span class="p">))</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">ls_2015</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">6000</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">20000</span><span class="p">,</span> <span class="n">add_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">ls_2015</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">crs</span><span class="p">)</span>
+
+<span class="n">ls_2015_RD</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">6000</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">20000</span><span class="p">,</span> <span class="n">add_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ls_2015_RD</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">crs</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;EPSG:28992&#39;)
+</pre></div>
+</div>
+<img alt="../_images/rasterbasics_39_1.png" src="../_images/rasterbasics_39_1.png" />
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="mosaicking-raster-data">
+<h1>Mosaicking raster data<a class="headerlink" href="#mosaicking-raster-data" title="Permalink to this headline">#</a></h1>
+<p>Terrain height information for the Netherlands is derived from detailed lidar campaigns. Airborn lidar is an active remote sensing system that emits laser pulses from a plane or helicopter. It determines the range to the surface below by counting the return travel time of the pulse. Combined with the position and orientation of the aircraft the surface elevation can be determined <a class="reference external" href="https://link.springer.com/chapter/10.1007/978-94-007-1667-4_8">Lemmens (2011)</a>. This open source data set is available with different spatial resolutions. For our application here, we use map tiles of 25 by 40 km with a cell length of 100 m. The rasters are stored in the <a class="reference external" href="https://gdal.org/drivers/raster/aig.html">arcinfo binary grid</a> format, where the folder is considered the file name and the metadata is stored in the accompanying folder called ‘info’ (yes, really).</p>
+<p><strong>Question 8</strong> Inspect the AHN_min folder in the data directory. What are the map tiles called?</p>
+<p>The mosaicking is carried out with the <a class="reference external" href="https://corteva.github.io/rioxarray/stable/rioxarray.html#rioxarray.merge.merge_arrays"><code class="docutils literal notranslate"><span class="pre">merge_arrays</span></code></a> function of <code class="docutils literal notranslate"><span class="pre">rioxarray.merge</span></code>.</p>
+<p><strong>Question 9</strong> xarray has a similar function called <code class="docutils literal notranslate"><span class="pre">xarray.combine_by_coords</span></code>. Lookup this xarray function. Why would you prefer to use merge_arrays?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rioxarray.merge</span> <span class="kn">import</span> <span class="n">merge_arrays</span>
+
+<span class="k">def</span> <span class="nf">aspect_equal_axis</span><span class="p">(</span><span class="n">da</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">da</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="n">da</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># mosaic DEM</span>
+<span class="n">ahn_dir</span> <span class="o">=</span> <span class="n">pjoin</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;AHN_min&#39;</span><span class="p">)</span>
+<span class="n">data_arrays</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">map_no</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span><span class="mi">41</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">f_tile</span> <span class="o">=</span> <span class="n">pjoin</span><span class="p">(</span><span class="n">ahn_dir</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">map_no</span><span class="p">),</span> <span class="s1">&#39;mn&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">map_no</span><span class="p">))</span>
+    <span class="n">da_tile</span> <span class="o">=</span> <span class="n">rioxarray</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span><span class="n">f_tile</span><span class="p">,</span> <span class="n">mask_and_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">da_tile</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">write_crs</span><span class="p">(</span><span class="mi">28992</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">data_arrays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">da_tile</span><span class="p">)</span>
+    <span class="n">ds</span><span class="p">[</span><span class="n">map_no</span><span class="p">]</span> <span class="o">=</span> <span class="n">da_tile</span>
+<span class="n">ahn_mosaic</span> <span class="o">=</span> <span class="n">merge_arrays</span><span class="p">(</span><span class="n">data_arrays</span><span class="p">)</span>
+<span class="n">ahn_mosaic</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;long_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;AHN_cm&#39;</span><span class="p">)</span>
+<span class="n">ahn_mosaic</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">to_raster</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;ahn.tif&#39;</span><span class="p">))</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">[</span><span class="n">ax1</span><span class="p">,</span><span class="n">ax2</span><span class="p">,</span><span class="n">ax3</span><span class="p">,</span><span class="n">ax4</span><span class="p">]</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">data_arrays</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">7000</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+<span class="n">data_arrays</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">7000</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+<span class="n">data_arrays</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax3</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">7000</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+<span class="n">data_arrays</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax4</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">7000</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+
+<span class="c1"># Clip DEM to the clipped landsat extent in RD</span>
+<span class="n">xmin_RD</span><span class="p">,</span> <span class="n">xmax_RD</span><span class="p">,</span> <span class="n">ymin_RD</span><span class="p">,</span> <span class="n">ymax_RD</span> <span class="o">=</span> <span class="mi">75000</span><span class="p">,</span> <span class="mi">160000</span><span class="p">,</span> <span class="mi">430000</span><span class="p">,</span> <span class="mi">500000</span>
+<span class="n">ahn_clip</span> <span class="o">=</span> <span class="n">ahn_mosaic</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">clip_box</span><span class="p">(</span><span class="n">minx</span><span class="o">=</span><span class="n">xmin_RD</span><span class="p">,</span> <span class="n">miny</span><span class="o">=</span><span class="n">ymin_RD</span><span class="p">,</span> <span class="n">maxx</span><span class="o">=</span><span class="n">xmax_RD</span><span class="p">,</span> <span class="n">maxy</span><span class="o">=</span><span class="n">ymax_RD</span><span class="p">)</span>
+<span class="n">ahn_clip</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">vmin</span><span class="o">=-</span><span class="mi">200</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span>
+                          <span class="n">size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="n">aspect_equal_axis</span><span class="p">(</span><span class="n">ahn_clip</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\rasterio\windows.py:310: RasterioDeprecationWarning: The height, width, and precision parameters are unused, deprecated, and will be removed in 2.0.0.
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="../_images/rasterbasics_41_1.png" src="../_images/rasterbasics_41_1.png" />
+<img alt="../_images/rasterbasics_41_2.png" src="../_images/rasterbasics_41_2.png" />
+</div>
+</div>
+<p>Adjust to code to write the clipped DEM to file and open in QGIS. Note that there is a stripy pattern of missing data in the smaller water bodies.</p>
+<p><strong>Question 10</strong> What causes the stripes in missing data? Check with Lemmens (2011) for background.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="data-homogenisation">
+<h1>Data homogenisation<a class="headerlink" href="#data-homogenisation" title="Permalink to this headline">#</a></h1>
+<p>Data homogenisation is rather easy using the <code class="docutils literal notranslate"><span class="pre">reproject_match</span></code> function, which wraps gdal_warp.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Instead of the first line, you can also use your own EVI image</span>
+
+<span class="n">evi_2015</span> <span class="o">=</span> <span class="n">rioxarray</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;evi_2015.tif&#39;</span><span class="p">))</span>
+<span class="n">evi_2015_RD</span> <span class="o">=</span> <span class="n">evi_2015</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">reproject_match</span><span class="p">(</span><span class="n">ahn_clip</span><span class="p">)</span>
+<span class="n">evi_2015_RD</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">to_raster</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;evi_2015_RD.tif&#39;</span><span class="p">))</span>
+
+<span class="n">evi_2015_RD</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">vmax</span><span class="o">=</span><span class="mf">3.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\rioxarray\raster_writer.py:110: UserWarning: The nodata value (3.402823466e+38) has been automatically changed to (3.4028234663852886e+38) to match the dtype of the data.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.QuadMesh at 0x20d1ca59280&gt;
+</pre></div>
+</div>
+<img alt="../_images/rasterbasics_44_2.png" src="../_images/rasterbasics_44_2.png" />
+</div>
+</div>
+<p><strong>Question 11</strong> Why is the file size of ‘evi_2015_RD.tif’ more than a factor 10 smaller than ‘evi_2015.tif’?</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="zonal-statistics">
+<h1>Zonal statistics<a class="headerlink" href="#zonal-statistics" title="Permalink to this headline">#</a></h1>
+<p>To calculate zonal statistics you need zones, which can be a polygon layer or a categorical raster. Here we reclassify the DEM into zones using <code class="docutils literal notranslate"><span class="pre">xrspatial</span></code>, which enables user-defined intervals to be assigned with new classes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate the zonal statistics</span>
+<span class="kn">from</span> <span class="nn">xrspatial.zonal</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">from</span> <span class="nn">xrspatial.classify</span> <span class="kn">import</span> <span class="n">reclassify</span>
+
+<span class="c1"># Create height intervals</span>
+<span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">10000</span><span class="p">,</span> <span class="o">-</span><span class="mi">500</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span><span class="mi">50000</span><span class="p">]</span>
+<span class="c1"># interval edges</span>
+<span class="n">ahn_zones</span> <span class="o">=</span> <span class="n">reclassify</span><span class="p">(</span><span class="n">ahn_clip</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> 
+                       <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span>
+                       <span class="n">new_values</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span>
+                       <span class="n">name</span><span class="o">=</span><span class="s1">&#39;zones&#39;</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">stats</span><span class="p">(</span><span class="n">zones</span><span class="o">=</span><span class="n">ahn_zones</span><span class="p">,</span> 
+           <span class="n">values</span><span class="o">=</span><span class="n">evi_2015_RD</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># plot the output</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">[</span><span class="n">ax0</span><span class="p">,</span> <span class="n">ax1</span><span class="p">]</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">ahn_zones</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax0</span><span class="p">)</span>
+<span class="n">ax0</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">evi_2015_RD</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">3.7</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="s1">&#39;zone&#39;</span><span class="p">,</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="s1">&#39;std&#39;</span><span class="p">)</span>
+
+<span class="n">ahn_zones</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">to_raster</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;ahn_zones.tif&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/rasterbasics_47_0.png" src="../_images/rasterbasics_47_0.png" />
+<img alt="../_images/rasterbasics_47_1.png" src="../_images/rasterbasics_47_1.png" />
+</div>
+</div>
+<p>The spatial results show category 5, with terrain heights above 500 cm along the dune field close to the coastline and on the ‘Utrechtse Heuvelrug’ in the East. The EVI values show a much more noisy pattern, but also a cluster of higher values in the East. The statistical analysis showed an average value of 2.9 for zone 5, which is 0.5 higher than the other zones. However, the standard deviation of all zones is larger than the difference in mean between the zones.</p>
+<section id="exercise-4">
+<h2>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">#</a></h2>
+<p>Band 10 of the 2020 Landsat image. Determine the height of the Urban Heat Island effect. Rank the land cover classes of
+<a class="reference external" href="https://lcviewer.vito.be/download">https://lcviewer.vito.be/download</a> from warmest to coolest. How much warmer is the city than the water on average?</p>
 </section>
 </section>
 
@@ -567,6 +2063,13 @@ xmin, ymin, xmax, ymax =  (715657.6212181412, 4916706.169415978, 730982.62121814
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">Spatial Machine Learning</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="classification_and_change_detection.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Image classification and change detection</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>
