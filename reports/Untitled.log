@@ -1,0 +1,145 @@
+Traceback (most recent call last):
+  File "C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\jupyter_cache\executors\utils.py", line 51, in single_nb_execution
+    executenb(
+  File "C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\nbclient\client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\nbclient\util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\nbclient\util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "C:\Users\straa005\Anaconda3\envs\sml\lib\asyncio\base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\nbclient\client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\nbclient\client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\nbclient\client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# -*- coding: utf-8 -*-
+"""
+Spyder Editor
+
+This is a temporary script file.
+"""
+
+from pystac_client import Client
+
+catalog = Client.open("https://planetarycomputer.microsoft.com/api/stac/v1")
+
+#%%
+time_range = "2020-12-01/2020-12-31"
+bbox = [-122.2751, 47.5469, -121.9613, 47.7458]
+
+search = catalog.search(collections=["landsat-c2-l2"], bbox=bbox, datetime=time_range)
+items = search.get_all_items()
+len(items)
+
+#%%
+area_of_interest = {
+    "type": "Polygon",
+    "coordinates": [
+        [
+            [-122.2751, 47.5469],
+            [-121.9613, 47.9613],
+            [-121.9613, 47.9613],
+            [-122.2751, 47.9613],
+            [-122.2751, 47.5469],
+        ]
+    ],
+}
+
+time_range = "2020-12-01/2020-12-31"
+
+search = catalog.search(
+    collections=["landsat-c2-l2"], intersects=area_of_interest, datetime=time_range
+)
+
+#%%
+import geopandas
+
+df = geopandas.GeoDataFrame.from_features(items.to_dict(), crs="epsg:4326")
+df.plot()
+
+#%%
+selected_item = min(items, key=lambda item: item.properties["eo:cloud_cover"])
+selected_item
+
+#%%
+import rich.table
+
+table = rich.table.Table("Asset Key", "Description")
+for asset_key, asset in selected_item.assets.items():
+    # print(f"{asset_key:<25} - {asset.title}")
+    table.add_row(asset_key, asset.title)
+
+table
+
+#%%
+selected_item.assets["rendered_preview"].to_dict()
+
+from IPython.display import Image
+
+Image(url=selected_item.assets["rendered_preview"].href, width=500)
+
+#%%
+import requests
+
+url = selected_item.assets["blue"].href
+print("Accessing", url)
+response = requests.get(url)
+response
+
+#%%
+import planetary_computer
+
+# PC_SDK_SUBSCRIPTION_KEY
+signed_href = planetary_computer.sign(selected_item).assets["blue"].href
+
+#%%
+import xarray as xr
+import rioxarray
+
+ds = rioxarray.open_rasterio(signed_href, overview_level=4).squeeze()
+img = ds.plot(cmap="Blues", add_colorbar=False)
+img.axes.set_axis_off();
+print(ds.data.shape)
+
+#%%
+import pystac
+import planetary_computer
+import rioxarray
+
+item_url = "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-2-l2a/items/S2B_MSIL2A_20220813T104629_R051_T31UGU_20220813T220324"
+
+# Load the individual item metadata and sign the assets
+item = pystac.Item.from_file(item_url)
+signed_item = planetary_computer.sign(item)
+
+# Open one of the data assets (other asset keys to use: 'B01', 'B02', 'B03', 'B04', 'B05', 'B06', 'B07', 'B08', 'B09', 'B11', 'B12', 'B8A', 'SCL', 'WVP', 'visual')
+asset_href = signed_item.assets["B04"].href
+ds = rioxarray.open_rasterio(asset_href)
+
+#%%
+import stackstac
+
+ds = stackstac.stack(planetary_computer.sign(items))
+ds
+
+#%%
+
+------------------
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+[1;32m~\AppData\Local\Temp\ipykernel_9896\1981747457.py[0m in [0;36m<cell line: 8>[1;34m()[0m
+[0;32m      6[0m """
+[0;32m      7[0m [1;33m[0m[0m
+[1;32m----> 8[1;33m [1;32mfrom[0m [0mpystac_client[0m [1;32mimport[0m [0mClient[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m      9[0m [1;33m[0m[0m
+[0;32m     10[0m [0mcatalog[0m [1;33m=[0m [0mClient[0m[1;33m.[0m[0mopen[0m[1;33m([0m[1;34m"https://planetarycomputer.microsoft.com/api/stac/v1"[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+
+[1;31mModuleNotFoundError[0m: No module named 'pystac_client'
+ModuleNotFoundError: No module named 'pystac_client'
+

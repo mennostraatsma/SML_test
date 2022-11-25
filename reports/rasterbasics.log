@@ -18,7 +18,7 @@ Traceback (most recent call last):
     return just_run(coro(*args, **kwargs))
   File "C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\nbclient\util.py", line 62, in just_run
     return loop.run_until_complete(coro)
-  File "C:\Users\straa005\Anaconda3\envs\sml\lib\asyncio\base_events.py", line 647, in run_until_complete
+  File "C:\Users\straa005\Anaconda3\envs\sml\lib\asyncio\base_events.py", line 649, in run_until_complete
     return future.result()
   File "C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\nbclient\client.py", line 663, in async_execute
     await self.async_execute_cell(
@@ -32,8 +32,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['# create helper function ', 'def stack_landsat_bands(band_path_template, out_path, bands, labels):', '    """Read the 30 m resolution files from disk and output with band names in long_format.', '    band_path: f-string of the path to the bands on disk. {band} should contain the band number', '    out_path:  path to the new output file']
+['# calculate derived attributes from the digital elevation model', 'slope = xrs.slope(dem)', 'aspect = xrs.aspect(dem)', 'hillshade = xrs.hillshade(dem, angle_altitude=45, azimuth=225)', 'observer_x, observer_y = 724000, 4918000']
 ...
-["stack_landsat_bands(path_template, pjoin(scratch_dir, 'LS_stacked_2015.tif'), ls_bands.band, ls_bands.label)", '', "ls_2015 = rioxarray.open_rasterio(pjoin(scratch_dir, 'LS_stacked_2015.tif'), mask_and_scale=True)", 'fig, ax = plt.subplots(1,1)', 'ls_2015[3].plot(ax=ax, vmin=5000, vmax=12000, add_labels=False)']
+['# write output to scratch directory to open in QGIS', "slope.rio.to_raster(pjoin(scratch_dir, 'slope.tif'))", "aspect.rio.to_raster(pjoin(scratch_dir, 'aspect.tif'))", "hillshade.rio.to_raster(pjoin(scratch_dir, 'hillshade.tif'))", "viewshed.rio.to_raster(pjoin(scratch_dir, 'viewshed.tif'))"]
 -------------------
 

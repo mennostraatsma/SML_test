@@ -52,6 +52,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Geographic analysis of web text resources" href="geogr-analysis-web.html" />
     <link rel="prev" title="Basic raster operations" href="rasterbasics.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -121,6 +122,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Image classification and change detection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="geogr-analysis-web.html">
+   Geographic analysis of web text resources
   </a>
  </li>
 </ul>
@@ -307,12 +313,56 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Image classification and change detection
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#visualise-the-full-feature-space-for-five-land-cover-classes">
+   Visualise the full feature space for five land cover classes
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#questions">
+     <em>
+      Questions
+     </em>
+     :
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#rasterize-the-aoi">
+     Rasterize the AOI
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
 </div>
     </div>
     <div class="article row">
@@ -324,6 +374,39 @@ title="Print to PDF"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Image classification and change detection
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#visualise-the-full-feature-space-for-five-land-cover-classes">
+   Visualise the full feature space for five land cover classes
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#questions">
+     <em>
+      Questions
+     </em>
+     :
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#rasterize-the-aoi">
+     Rasterize the AOI
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -341,6 +424,110 @@ title="Print to PDF"
 <li><p><strong>Direct multi-date classification:</strong> This method is based on the single analysis of a combined dataset of the two dates images aiming at identifying areas of changes. Two images are first merged into one multi-band image set. Classes where changes are occurring are expected to present statistics significantly different from where change did not take place and can so be identified. Unsupervised classification methods e.g. the isolate algorithm to reveal the spectral distance patterns in the data.</p></li>
 <li><p><strong>Post-classification analysis:</strong> The two (or more) images acquired at different dates are first independently classified using the same legend (number of classes and type of classes). Next, the two images are overlaid and compared by subtracting or otherwise. It should be noted that the accuracy of the change detection depends on the accuracies of each of the individual classification results and the geometric match of the imagery.</p></li>
 </ol>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="visualise-the-full-feature-space-for-five-land-cover-classes">
+<h1>Visualise the full feature space for five land cover classes<a class="headerlink" href="#visualise-the-full-feature-space-for-five-land-cover-classes" title="Permalink to this headline">#</a></h1>
+<p>Landsat’s seven bands give a different spectral profile for water, sand, forest, urban and grassland. In this exercise, you will create the create new vector data by digitizing Areas Of Interest (AOIs) for these five classes and extract the pixel values from the landsat scene. The result will be visualized in a scatterplot matrix using seaborn. The exercise consists of the following steps:</p>
+<ol class="simple">
+<li><p>Learn to digitize polygons in QGIS.</p></li>
+<li><p>Digitize small uniform land cover units for water, sand, forest, urban and grassland. These are your AOIs.</p></li>
+<li><p>Rasterize the AOI</p></li>
+<li><p>Reformat the spectral data and the AOIs from raster format to a <code class="docutils literal notranslate"><span class="pre">pandas</span></code> dataframe.</p></li>
+<li><p>Create a scatterplot matrix using Seaborn’s <code class="docutils literal notranslate"><span class="pre">pairplot</span></code>.</p></li>
+</ol>
+<p>Step 1 can be completed by following along the QGIS <a class="reference external" href="https://docs.qgis.org/3.10/en/docs/training_manual/create_vector_data/create_new_vector.html">tutorial 5.1</a>. Use the 2015 landsat image as a background and use the RGB=543 band combination to visualize the satellite image. Make sure that the coordinate reference system of your shapefile equals the crs of the landsat image. For step 2, digitize around 20 AOIs, four four each land cover class. Give each feature two attributes: land cover and a numeric representation of the land cover:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>land_cover</p></th>
+<th class="head"><p>value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>water</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>sand</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-even"><td><p>forest</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-odd"><td><p>grassland</p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-even"><td><p>urban</p></td>
+<td><p>5</p></td>
+</tr>
+</tbody>
+</table>
+<p>Read the AOIs and visualise the data in a plot. If you are unable to do step 1 and 2, use the file ‘aoi_NL_5_classes.shp’ from the <code class="docutils literal notranslate"><span class="pre">data</span></code> folder</p>
+<section id="questions">
+<h2><em>Questions</em>:<a class="headerlink" href="#questions" title="Permalink to this headline">#</a></h2>
+<ol class="simple">
+<li><p>Do you see any digitizing mistakes?</p></li>
+<li><p>Do the raster and vector data share the same crs?</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check the location of AOI (areas of interest (reference data))</span>
+
+<span class="n">aoi</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;../data/aoi_NL_5_classes.shp&#39;</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">aoi</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">show</span><span class="p">(</span><span class="n">ndvi_2015</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ndvi_meta</span><span class="p">[</span><span class="s1">&#39;transform&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">aoi</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s1">&#39;land_cover&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Set1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="nn">~\AppData\Local\Temp\ipykernel_10468\1311599434.py</span> in <span class="ni">&lt;cell line: 3&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Check the location of AOI (areas of interest (reference data))</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> 
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">aoi</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;../data/aoi_NL_5_classes.shp&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="nb">print</span> <span class="p">(</span><span class="n">aoi</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> 
+
+<span class="ne">NameError</span>: name &#39;gpd&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="rasterize-the-aoi">
+<h2>Rasterize the AOI<a class="headerlink" href="#rasterize-the-aoi" title="Permalink to this headline">#</a></h2>
+<p>To rasterize the features in the shapefile, we will use <code class="docutils literal notranslate"><span class="pre">rasterio</span></code>’s <a class="reference external" href="https://rasterio.readthedocs.io/en/latest/api/rasterio.features.html">rasterize</a> function. The shapes to be rasterized have to be an “(iterable of (geometry, value) pairs or iterable over) – geometries.” We can obtain the shapes in this format from the GeoDataFrame using list comprehension. The number of rows and columns (out_shape) and the transform should be taken from the clipped raster dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Rasterize the aoi</span>
+
+<span class="kn">from</span> <span class="nn">rasterio.features</span> <span class="kn">import</span> <span class="n">rasterize</span>
+
+<span class="c1"># Read the aoi file into a GeoDataFrame and extract the shapes as a list of tuples with (geometry, value) pairs</span>
+<span class="n">aoi_gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;data/aoi_NL_5_classes.shp&#39;</span><span class="p">)</span>
+<span class="c1">#aoi_gdf = gpd.read_file(&#39;data/aoi_NL_UTM.shp&#39;)</span>
+<span class="n">shapes</span> <span class="o">=</span> <span class="p">[(</span><span class="n">geom</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">geom</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">aoi_gdf</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">],</span> <span class="n">aoi_gdf</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">])]</span>
+
+<span class="c1"># Rasterize the vector data using the existing clipped raster as template</span>
+<span class="n">rs</span> <span class="o">=</span> <span class="n">rasterize</span><span class="p">(</span><span class="n">shapes</span><span class="p">,</span>
+               <span class="n">out_shape</span><span class="o">=</span><span class="n">ndvi_2015</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span>
+               <span class="n">transform</span><span class="o">=</span><span class="n">ndvi_meta</span><span class="p">[</span><span class="s1">&#39;transform&#39;</span><span class="p">],</span>
+               <span class="n">all_touched</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+               <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float64&#39;</span><span class="p">)</span>
+
+<span class="c1"># Show the rasterized data and write to file</span>
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">show</span><span class="p">(</span><span class="n">rs</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ndvi_meta</span><span class="p">[</span><span class="s1">&#39;transform&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;scratch/aoi_all.tif&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">ndvi_meta</span><span class="p">)</span> <span class="k">as</span> <span class="n">dst</span><span class="p">:</span>
+    <span class="n">dst</span><span class="o">.</span><span class="n">write_band</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">rs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -376,6 +563,13 @@ title="Print to PDF"
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">Basic raster operations</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="geogr-analysis-web.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Geographic analysis of web text resources</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>

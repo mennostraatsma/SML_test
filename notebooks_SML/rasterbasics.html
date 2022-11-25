@@ -124,6 +124,11 @@ const thebe_selector_output = ".output, .cell_output"
    Image classification and change detection
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="geogr-analysis-web.html">
+   Geographic analysis of web text resources
+  </a>
+ </li>
 </ul>
 
     </div>
@@ -362,6 +367,11 @@ title="Print to PDF"
      xarray-spatial
     </a>
    </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example">
+     Example
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
@@ -493,6 +503,11 @@ title="Print to PDF"
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#xarray-spatial">
      xarray-spatial
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example">
+     Example
     </a>
    </li>
   </ul>
@@ -634,6 +649,102 @@ notebook, we will use <a class="reference external" href="https://docs.xarray.de
 <section id="xarray-spatial">
 <h2>xarray-spatial<a class="headerlink" href="#xarray-spatial" title="Permalink to this headline">#</a></h2>
 <p><a class="reference external" href="https://xarray-spatial.org/">xarray-spatial</a> include raster-analysis functions needed for GIS developers, which is not available in xarray itself. It includes functions for spreading, zonal and focal operations, and surface analysis.</p>
+<p>Here we go!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import packages</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span> <span class="k">as</span> <span class="n">pjoin</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">import</span> <span class="nn">xrspatial</span> <span class="k">as</span> <span class="nn">xrs</span>
+<span class="kn">import</span> <span class="nn">rioxarray</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="c1"># directory settings</span>
+<span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;../data&#39;</span>         <span class="c1"># relative path to the input data</span>
+<span class="n">scratch_dir</span> <span class="o">=</span> <span class="s1">&#39;../scratch&#39;</span>   <span class="c1"># relative path to the output data.</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">xarray</span></code> and the associated <code class="docutils literal notranslate"><span class="pre">netcdf</span></code> file format are very flexible in order to accommadate different data types. Let’s first have a look at a representative example for geosciences with dummy data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Construct spatial-temporal dummy data of temperature</span>
+<span class="n">temperature_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">27</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">temperature_data</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">temperature_data</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># plot the raw data</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">[</span><span class="n">ax0</span><span class="p">,</span> <span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">]</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ax0</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">temperature_data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">temperature_data</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">temperature_data</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x24058300310&gt;
+</pre></div>
+</div>
+<img alt="../_images/rasterbasics_4_1.png" src="../_images/rasterbasics_4_1.png" />
+</div>
+</div>
+<p>The data shows an increasing temperature between the three figures and two outliers (top left and bottom right). Now, we will define the space and time dimensions and create the <code class="docutils literal notranslate"><span class="pre">DataArray</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Time dimension with three time steps</span>
+<span class="n">times</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s2">&quot;2022-01-01&quot;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;MS&#39;</span><span class="p">)</span>
+
+<span class="c1"># Spatial dimensions in the x and y direction, which should equal the number of columns and rows of the data, respectively</span>
+<span class="n">x_coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">580000</span><span class="p">,</span> <span class="mi">640000</span><span class="p">,</span> <span class="mi">20000</span><span class="p">)</span>
+<span class="n">y_coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5800000</span><span class="p">,</span> <span class="mi">5860000</span><span class="p">,</span> <span class="mi">20000</span><span class="p">)</span>
+
+<span class="c1"># Combine in a single DataArray</span>
+<span class="n">da1</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">temperature_data</span><span class="p">,</span> 
+                  <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span><span class="n">x_coords</span><span class="p">,</span>
+                           <span class="s1">&#39;y&#39;</span><span class="p">:</span><span class="n">y_coords</span><span class="p">,</span>
+                           <span class="s1">&#39;time&#39;</span><span class="p">:</span><span class="n">times</span><span class="p">},</span>
+                  <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">])</span>
+
+<span class="c1"># Add the name and the coordinate reference system.</span>
+<span class="n">da1</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;temperature&#39;</span>
+<span class="n">da1</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">write_crs</span><span class="p">(</span><span class="s1">&#39;epsg:32631&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Plot</span>
+<span class="n">da1</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">col</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;xarray.plot.facetgrid.FacetGrid at 0x2404cfa00d0&gt;
+</pre></div>
+</div>
+<img alt="../_images/rasterbasics_6_1.png" src="../_images/rasterbasics_6_1.png" />
+</div>
+</div>
+<p>Using the plotting method of the <code class="docutils literal notranslate"><span class="pre">DataArray</span></code>, the different dimensions become clear and the variable name is used in the legend.
+<strong>Note</strong> that the data values in the y-direction (northing) have reversed as the index increases from top to bottom, contrary to the northing, which increases from bottom to top.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Export to netcdf and tiff</span>
+<span class="n">da1</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;temperature_dummy.nc&#39;</span><span class="p">))</span>
+
+<span class="c1"># Netcdf does not render properly in QGIS.</span>
+<span class="c1"># The tiff format is an alternative, but then the `long_name&#39; attribute of the dataset</span>
+<span class="c1"># should contain a tuple of strings with time steps</span>
+<span class="n">da1</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;long_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">da1</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">))</span>
+<span class="n">da1</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">to_raster</span><span class="p">(</span><span class="s1">&#39;range_test.tif&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="reading-and-writing-single-band-data">
@@ -648,21 +759,7 @@ notebook, we will use <a class="reference external" href="https://docs.xarray.de
 <p><strong>Assert that the information you got from QGIS equals the info below.</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span> <span class="k">as</span> <span class="n">pjoin</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
-<span class="kn">import</span> <span class="nn">xrspatial</span> <span class="k">as</span> <span class="nn">xrs</span>
-<span class="kn">import</span> <span class="nn">rioxarray</span>
-<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-
-
-<span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;../data&#39;</span>         <span class="c1"># relative path to the input data</span>
-<span class="n">scratch_dir</span> <span class="o">=</span> <span class="s1">&#39;../scratch&#39;</span>   <span class="c1"># relative path to the output data.</span>
-
-<span class="c1"># read and plot the data</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># read and plot the data</span>
 <span class="n">dem</span> <span class="o">=</span> <span class="n">rioxarray</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;dem.tif&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span> 
 <span class="n">dem</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
 
@@ -681,7 +778,7 @@ nr cols, nr rows =  3065 1895
 xmin, ymin, xmax, ymax =  (715657.6212181412, 4916706.169415978, 730982.6212181412, 4926181.169415978)
 </pre></div>
 </div>
-<img alt="../_images/rasterbasics_3_1.png" src="../_images/rasterbasics_3_1.png" />
+<img alt="../_images/rasterbasics_10_1.png" src="../_images/rasterbasics_10_1.png" />
 </div>
 </div>
 <p>An overview of the <code class="docutils literal notranslate"><span class="pre">dem</span></code> is obtained by simply typing the variable name. It provides the data type (DataArray), coordinates with the dimensions and the spatial reference. Note that the layered cilinder on the right of the coordinates are expandable.</p>
@@ -723,6 +820,7 @@ xmin, ymin, xmax, ymax =  (715657.6212181412, 4916706.169415978, 730982.62121814
 }
 
 html[theme=dark],
+body[data-theme=dark],
 body.vscode-dark {
   --xr-font-color0: rgba(255, 255, 255, 1);
   --xr-font-color2: rgba(255, 255, 255, 0.54);
@@ -952,6 +1050,11 @@ body.vscode-dark {
   grid-column: 4;
 }
 
+.xr-index-preview {
+  grid-column: 2 / 5;
+  color: var(--xr-font-color2);
+}
+
 .xr-var-name,
 .xr-var-dims,
 .xr-var-dtype,
@@ -973,14 +1076,16 @@ body.vscode-dark {
 }
 
 .xr-var-attrs,
-.xr-var-data {
+.xr-var-data,
+.xr-index-data {
   display: none;
   background-color: var(--xr-background-color) !important;
   padding-bottom: 5px !important;
 }
 
 .xr-var-attrs-in:checked ~ .xr-var-attrs,
-.xr-var-data-in:checked ~ .xr-var-data {
+.xr-var-data-in:checked ~ .xr-var-data,
+.xr-index-data-in:checked ~ .xr-index-data {
   display: block;
 }
 
@@ -990,13 +1095,16 @@ body.vscode-dark {
 
 .xr-var-name span,
 .xr-var-data,
+.xr-index-name div,
+.xr-index-data,
 .xr-attrs {
   padding-left: 25px !important;
 }
 
 .xr-attrs,
 .xr-var-attrs,
-.xr-var-data {
+.xr-var-data,
+.xr-index-data {
   grid-column: 1 / -1;
 }
 
@@ -1034,7 +1142,8 @@ dl.xr-attrs {
 }
 
 .xr-icon-database,
-.xr-icon-file-text2 {
+.xr-icon-file-text2,
+.xr-no-icon {
   display: inline-block;
   vertical-align: middle;
   width: 1em;
@@ -1044,41 +1153,46 @@ dl.xr-attrs {
   fill: currentColor;
 }
 </style><pre class='xr-text-repr-fallback'>&lt;xarray.DataArray (y: 1895, x: 3065)&gt;
-array([[832.4293 , 830.6872 , 828.9995 , ..., 971.5688 , 970.3875 , 969.2219 ],
-       [833.7491 , 832.1037 , 830.5921 , ..., 971.9049 , 970.7319 , 969.58813],
-       [835.1948 , 833.77124, 832.4583 , ..., 972.2599 , 971.1036 , 969.9869 ],
-       ...,
-       [892.69434, 891.4918 , 890.22253, ..., 597.469  , 597.4671 , 597.4556 ],
-       [892.7596 , 891.4594 , 890.0948 , ..., 597.256  , 597.2413 , 597.2349 ],
-       [892.76953, 891.38574, 889.93823, ..., 597.0923 , 597.0565 , 597.0371 ]],
-      dtype=float32)
+[5808175 values with dtype=float32]
 Coordinates:
     band         int32 1
   * x            (x) float64 7.157e+05 7.157e+05 7.157e+05 ... 7.31e+05 7.31e+05
   * y            (y) float64 4.926e+06 4.926e+06 ... 4.917e+06 4.917e+06
     spatial_ref  int32 0
-Attributes:
+Attributes: (12/14)
+    AREA_OR_POINT:           Area
+    DataType:                Generic
     SourceBandIndex:         0
     STATISTICS_COVARIANCES:  60223.97714605515
     STATISTICS_MAXIMUM:      1818.408203125
     STATISTICS_MEAN:         931.67042975825
-    STATISTICS_MEDIAN:       nan
-    STATISTICS_MINIMUM:      593.40081787109
+    ...                      ...
     STATISTICS_SKIPFACTORX:  1
     STATISTICS_SKIPFACTORY:  1
     STATISTICS_STDDEV:       245.40573983926
-    _FillValue:              -3.4028230607370965e+38
+    _FillValue:              -3.402823e+38
     scale_factor:            1.0
-    add_offset:              0.0</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-array-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>y</span>: 1895</li><li><span class='xr-has-index'>x</span>: 3065</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-8624e09c-3fa9-410a-a2e0-063a90d86a64' class='xr-array-in' type='checkbox' checked><label for='section-8624e09c-3fa9-410a-a2e0-063a90d86a64' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>832.4 830.7 829.0 827.5 826.1 824.8 ... 597.3 597.2 597.1 597.1 597.0</span></div><div class='xr-array-data'><pre>array([[832.4293 , 830.6872 , 828.9995 , ..., 971.5688 , 970.3875 , 969.2219 ],
-       [833.7491 , 832.1037 , 830.5921 , ..., 971.9049 , 970.7319 , 969.58813],
-       [835.1948 , 833.77124, 832.4583 , ..., 972.2599 , 971.1036 , 969.9869 ],
-       ...,
-       [892.69434, 891.4918 , 890.22253, ..., 597.469  , 597.4671 , 597.4556 ],
-       [892.7596 , 891.4594 , 890.0948 , ..., 597.256  , 597.2413 , 597.2349 ],
-       [892.76953, 891.38574, 889.93823, ..., 597.0923 , 597.0565 , 597.0371 ]],
-      dtype=float32)</pre></div></div></li><li class='xr-section-item'><input id='section-7b0d4557-2c2f-41c7-b661-ef00a201f8bb' class='xr-section-summary-in' type='checkbox'  checked><label for='section-7b0d4557-2c2f-41c7-b661-ef00a201f8bb' class='xr-section-summary' >Coordinates: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>band</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>int32</div><div class='xr-var-preview xr-preview'>1</div><input id='attrs-e6e34870-1628-4bca-bb96-29bcd680ae6c' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-e6e34870-1628-4bca-bb96-29bcd680ae6c' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-74c55fc0-a05e-4ba7-8e78-82bf53f7fe0e' class='xr-var-data-in' type='checkbox'><label for='data-74c55fc0-a05e-4ba7-8e78-82bf53f7fe0e' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array(1)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>x</span></div><div class='xr-var-dims'>(x)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>7.157e+05 7.157e+05 ... 7.31e+05</div><input id='attrs-4d1ca716-56d3-481e-b2bf-5ff65078b0e1' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-4d1ca716-56d3-481e-b2bf-5ff65078b0e1' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-d69bae02-c208-4d74-a25f-d83e028480b2' class='xr-var-data-in' type='checkbox'><label for='data-d69bae02-c208-4d74-a25f-d83e028480b2' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([715660.121218, 715665.121218, 715670.121218, ..., 730970.121218,
-       730975.121218, 730980.121218])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>y</span></div><div class='xr-var-dims'>(y)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.926e+06 4.926e+06 ... 4.917e+06</div><input id='attrs-154e3407-8b11-444d-b897-d328b37b7972' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-154e3407-8b11-444d-b897-d328b37b7972' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-63436059-46c7-4012-867c-8f70cd0c3aa9' class='xr-var-data-in' type='checkbox'><label for='data-63436059-46c7-4012-867c-8f70cd0c3aa9' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([4926178.669416, 4926173.669416, 4926168.669416, ..., 4916718.669416,
-       4916713.669416, 4916708.669416])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>spatial_ref</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>int32</div><div class='xr-var-preview xr-preview'>0</div><input id='attrs-0c35a6a7-4101-4963-8f32-a2ef30197fcc' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-0c35a6a7-4101-4963-8f32-a2ef30197fcc' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-2c214a33-0492-4daa-88c7-677fed189ab9' class='xr-var-data-in' type='checkbox'><label for='data-2c214a33-0492-4daa-88c7-677fed189ab9' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>crs_wkt :</span></dt><dd>PROJCS[&quot;WGS 84 / UTM zone 31N&quot;,GEOGCS[&quot;WGS 84&quot;,DATUM[&quot;WGS_1984&quot;,SPHEROID[&quot;WGS 84&quot;,6378137,298.257223563,AUTHORITY[&quot;EPSG&quot;,&quot;7030&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;6326&quot;]],PRIMEM[&quot;Greenwich&quot;,0,AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],UNIT[&quot;degree&quot;,0.0174532925199433,AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;4326&quot;]],PROJECTION[&quot;Transverse_Mercator&quot;],PARAMETER[&quot;latitude_of_origin&quot;,0],PARAMETER[&quot;central_meridian&quot;,3],PARAMETER[&quot;scale_factor&quot;,0.9996],PARAMETER[&quot;false_easting&quot;,500000],PARAMETER[&quot;false_northing&quot;,0],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],AXIS[&quot;Easting&quot;,EAST],AXIS[&quot;Northing&quot;,NORTH],AUTHORITY[&quot;EPSG&quot;,&quot;32631&quot;]]</dd><dt><span>semi_major_axis :</span></dt><dd>6378137.0</dd><dt><span>semi_minor_axis :</span></dt><dd>6356752.314245179</dd><dt><span>inverse_flattening :</span></dt><dd>298.257223563</dd><dt><span>reference_ellipsoid_name :</span></dt><dd>WGS 84</dd><dt><span>longitude_of_prime_meridian :</span></dt><dd>0.0</dd><dt><span>prime_meridian_name :</span></dt><dd>Greenwich</dd><dt><span>geographic_crs_name :</span></dt><dd>WGS 84</dd><dt><span>horizontal_datum_name :</span></dt><dd>World Geodetic System 1984</dd><dt><span>projected_crs_name :</span></dt><dd>WGS 84 / UTM zone 31N</dd><dt><span>grid_mapping_name :</span></dt><dd>transverse_mercator</dd><dt><span>latitude_of_projection_origin :</span></dt><dd>0.0</dd><dt><span>longitude_of_central_meridian :</span></dt><dd>3.0</dd><dt><span>false_easting :</span></dt><dd>500000.0</dd><dt><span>false_northing :</span></dt><dd>0.0</dd><dt><span>scale_factor_at_central_meridian :</span></dt><dd>0.9996</dd><dt><span>spatial_ref :</span></dt><dd>PROJCS[&quot;WGS 84 / UTM zone 31N&quot;,GEOGCS[&quot;WGS 84&quot;,DATUM[&quot;WGS_1984&quot;,SPHEROID[&quot;WGS 84&quot;,6378137,298.257223563,AUTHORITY[&quot;EPSG&quot;,&quot;7030&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;6326&quot;]],PRIMEM[&quot;Greenwich&quot;,0,AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],UNIT[&quot;degree&quot;,0.0174532925199433,AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;4326&quot;]],PROJECTION[&quot;Transverse_Mercator&quot;],PARAMETER[&quot;latitude_of_origin&quot;,0],PARAMETER[&quot;central_meridian&quot;,3],PARAMETER[&quot;scale_factor&quot;,0.9996],PARAMETER[&quot;false_easting&quot;,500000],PARAMETER[&quot;false_northing&quot;,0],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],AXIS[&quot;Easting&quot;,EAST],AXIS[&quot;Northing&quot;,NORTH],AUTHORITY[&quot;EPSG&quot;,&quot;32631&quot;]]</dd><dt><span>GeoTransform :</span></dt><dd>715657.6212181412 5.0 0.0 4926181.169415978 0.0 -5.0</dd></dl></div><div class='xr-var-data'><pre>array(0)</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-99761bac-3211-4e45-a231-c6342b25203d' class='xr-section-summary-in' type='checkbox'  ><label for='section-99761bac-3211-4e45-a231-c6342b25203d' class='xr-section-summary' >Attributes: <span>(12)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>SourceBandIndex :</span></dt><dd>0</dd><dt><span>STATISTICS_COVARIANCES :</span></dt><dd>60223.97714605515</dd><dt><span>STATISTICS_MAXIMUM :</span></dt><dd>1818.408203125</dd><dt><span>STATISTICS_MEAN :</span></dt><dd>931.67042975825</dd><dt><span>STATISTICS_MEDIAN :</span></dt><dd>nan</dd><dt><span>STATISTICS_MINIMUM :</span></dt><dd>593.40081787109</dd><dt><span>STATISTICS_SKIPFACTORX :</span></dt><dd>1</dd><dt><span>STATISTICS_SKIPFACTORY :</span></dt><dd>1</dd><dt><span>STATISTICS_STDDEV :</span></dt><dd>245.40573983926</dd><dt><span>_FillValue :</span></dt><dd>-3.4028230607370965e+38</dd><dt><span>scale_factor :</span></dt><dd>1.0</dd><dt><span>add_offset :</span></dt><dd>0.0</dd></dl></div></li></ul></div></div></div></div>
+    add_offset:              0.0</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-array-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>y</span>: 1895</li><li><span class='xr-has-index'>x</span>: 3065</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-810efdc0-dd29-47ad-8db4-509877505c6f' class='xr-array-in' type='checkbox' checked><label for='section-810efdc0-dd29-47ad-8db4-509877505c6f' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>...</span></div><div class='xr-array-data'><pre>[5808175 values with dtype=float32]</pre></div></div></li><li class='xr-section-item'><input id='section-c40345e8-84cb-4dc3-9932-c9da0321cb39' class='xr-section-summary-in' type='checkbox'  checked><label for='section-c40345e8-84cb-4dc3-9932-c9da0321cb39' class='xr-section-summary' >Coordinates: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>band</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>int32</div><div class='xr-var-preview xr-preview'>1</div><input id='attrs-9818fb4c-3e23-4cb6-ac70-3b559632534e' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-9818fb4c-3e23-4cb6-ac70-3b559632534e' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-8694492f-6635-4a08-ab41-e244efbffbcd' class='xr-var-data-in' type='checkbox'><label for='data-8694492f-6635-4a08-ab41-e244efbffbcd' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array(1)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>x</span></div><div class='xr-var-dims'>(x)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>7.157e+05 7.157e+05 ... 7.31e+05</div><input id='attrs-7c397552-329a-4977-beeb-334e38d1ba4e' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-7c397552-329a-4977-beeb-334e38d1ba4e' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-80d816ef-6df8-4ab0-8ea9-bf5a3709d59a' class='xr-var-data-in' type='checkbox'><label for='data-80d816ef-6df8-4ab0-8ea9-bf5a3709d59a' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([715660.121218, 715665.121218, 715670.121218, ..., 730970.121218,
+       730975.121218, 730980.121218])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>y</span></div><div class='xr-var-dims'>(y)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.926e+06 4.926e+06 ... 4.917e+06</div><input id='attrs-638d8c64-0fe6-462a-b368-0d93a6624abe' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-638d8c64-0fe6-462a-b368-0d93a6624abe' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-e897109c-ae7e-4d67-bb5a-d0cb8acb314f' class='xr-var-data-in' type='checkbox'><label for='data-e897109c-ae7e-4d67-bb5a-d0cb8acb314f' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([4926178.669416, 4926173.669416, 4926168.669416, ..., 4916718.669416,
+       4916713.669416, 4916708.669416])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>spatial_ref</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>int32</div><div class='xr-var-preview xr-preview'>0</div><input id='attrs-abce8509-3ae9-4d20-a49e-1b22a8b53f62' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-abce8509-3ae9-4d20-a49e-1b22a8b53f62' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-baf1bfae-966c-4146-b985-0cbe632e2b0c' class='xr-var-data-in' type='checkbox'><label for='data-baf1bfae-966c-4146-b985-0cbe632e2b0c' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>crs_wkt :</span></dt><dd>PROJCS[&quot;WGS 84 / UTM zone 31N&quot;,GEOGCS[&quot;WGS 84&quot;,DATUM[&quot;WGS_1984&quot;,SPHEROID[&quot;WGS 84&quot;,6378137,298.257223563,AUTHORITY[&quot;EPSG&quot;,&quot;7030&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;6326&quot;]],PRIMEM[&quot;Greenwich&quot;,0,AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],UNIT[&quot;degree&quot;,0.0174532925199433,AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;4326&quot;]],PROJECTION[&quot;Transverse_Mercator&quot;],PARAMETER[&quot;latitude_of_origin&quot;,0],PARAMETER[&quot;central_meridian&quot;,3],PARAMETER[&quot;scale_factor&quot;,0.9996],PARAMETER[&quot;false_easting&quot;,500000],PARAMETER[&quot;false_northing&quot;,0],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],AXIS[&quot;Easting&quot;,EAST],AXIS[&quot;Northing&quot;,NORTH],AUTHORITY[&quot;EPSG&quot;,&quot;32631&quot;]]</dd><dt><span>semi_major_axis :</span></dt><dd>6378137.0</dd><dt><span>semi_minor_axis :</span></dt><dd>6356752.314245179</dd><dt><span>inverse_flattening :</span></dt><dd>298.257223563</dd><dt><span>reference_ellipsoid_name :</span></dt><dd>WGS 84</dd><dt><span>longitude_of_prime_meridian :</span></dt><dd>0.0</dd><dt><span>prime_meridian_name :</span></dt><dd>Greenwich</dd><dt><span>geographic_crs_name :</span></dt><dd>WGS 84</dd><dt><span>horizontal_datum_name :</span></dt><dd>World Geodetic System 1984</dd><dt><span>projected_crs_name :</span></dt><dd>WGS 84 / UTM zone 31N</dd><dt><span>grid_mapping_name :</span></dt><dd>transverse_mercator</dd><dt><span>latitude_of_projection_origin :</span></dt><dd>0.0</dd><dt><span>longitude_of_central_meridian :</span></dt><dd>3.0</dd><dt><span>false_easting :</span></dt><dd>500000.0</dd><dt><span>false_northing :</span></dt><dd>0.0</dd><dt><span>scale_factor_at_central_meridian :</span></dt><dd>0.9996</dd><dt><span>spatial_ref :</span></dt><dd>PROJCS[&quot;WGS 84 / UTM zone 31N&quot;,GEOGCS[&quot;WGS 84&quot;,DATUM[&quot;WGS_1984&quot;,SPHEROID[&quot;WGS 84&quot;,6378137,298.257223563,AUTHORITY[&quot;EPSG&quot;,&quot;7030&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;6326&quot;]],PRIMEM[&quot;Greenwich&quot;,0,AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],UNIT[&quot;degree&quot;,0.0174532925199433,AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;4326&quot;]],PROJECTION[&quot;Transverse_Mercator&quot;],PARAMETER[&quot;latitude_of_origin&quot;,0],PARAMETER[&quot;central_meridian&quot;,3],PARAMETER[&quot;scale_factor&quot;,0.9996],PARAMETER[&quot;false_easting&quot;,500000],PARAMETER[&quot;false_northing&quot;,0],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],AXIS[&quot;Easting&quot;,EAST],AXIS[&quot;Northing&quot;,NORTH],AUTHORITY[&quot;EPSG&quot;,&quot;32631&quot;]]</dd><dt><span>GeoTransform :</span></dt><dd>715657.6212181412 5.0 0.0 4926181.169415978 0.0 -5.0</dd></dl></div><div class='xr-var-data'><pre>array(0)</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-f6c9f44e-9c5f-4c80-aeaa-4e005fc94c3d' class='xr-section-summary-in' type='checkbox'  ><label for='section-f6c9f44e-9c5f-4c80-aeaa-4e005fc94c3d' class='xr-section-summary' >Indexes: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-index-name'><div>x</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-06e08a47-3fed-4abd-91fe-4d0c6023485a' class='xr-index-data-in' type='checkbox'/><label for='index-06e08a47-3fed-4abd-91fe-4d0c6023485a' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Float64Index([715660.1212181412, 715665.1212181412, 715670.1212181412,
+              715675.1212181412, 715680.1212181412, 715685.1212181412,
+              715690.1212181412, 715695.1212181412, 715700.1212181412,
+              715705.1212181412,
+              ...
+              730935.1212181412, 730940.1212181412, 730945.1212181412,
+              730950.1212181412, 730955.1212181412, 730960.1212181412,
+              730965.1212181412, 730970.1212181412, 730975.1212181412,
+              730980.1212181412],
+             dtype=&#x27;float64&#x27;, name=&#x27;x&#x27;, length=3065))</pre></div></li><li class='xr-var-item'><div class='xr-index-name'><div>y</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-f931f874-2747-40df-b78d-ba7265481ba6' class='xr-index-data-in' type='checkbox'/><label for='index-f931f874-2747-40df-b78d-ba7265481ba6' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Float64Index([4926178.669415978, 4926173.669415978, 4926168.669415978,
+              4926163.669415978, 4926158.669415978, 4926153.669415978,
+              4926148.669415978, 4926143.669415978, 4926138.669415978,
+              4926133.669415978,
+              ...
+              4916753.669415978, 4916748.669415978, 4916743.669415978,
+              4916738.669415978, 4916733.669415978, 4916728.669415978,
+              4916723.669415978, 4916718.669415978, 4916713.669415978,
+              4916708.669415978],
+             dtype=&#x27;float64&#x27;, name=&#x27;y&#x27;, length=1895))</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-200101d7-08c0-4bfe-a1b8-91ae0304915a' class='xr-section-summary-in' type='checkbox'  ><label for='section-200101d7-08c0-4bfe-a1b8-91ae0304915a' class='xr-section-summary' >Attributes: <span>(14)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>AREA_OR_POINT :</span></dt><dd>Area</dd><dt><span>DataType :</span></dt><dd>Generic</dd><dt><span>SourceBandIndex :</span></dt><dd>0</dd><dt><span>STATISTICS_COVARIANCES :</span></dt><dd>60223.97714605515</dd><dt><span>STATISTICS_MAXIMUM :</span></dt><dd>1818.408203125</dd><dt><span>STATISTICS_MEAN :</span></dt><dd>931.67042975825</dd><dt><span>STATISTICS_MEDIAN :</span></dt><dd>nan</dd><dt><span>STATISTICS_MINIMUM :</span></dt><dd>593.40081787109</dd><dt><span>STATISTICS_SKIPFACTORX :</span></dt><dd>1</dd><dt><span>STATISTICS_SKIPFACTORY :</span></dt><dd>1</dd><dt><span>STATISTICS_STDDEV :</span></dt><dd>245.40573983926</dd><dt><span>_FillValue :</span></dt><dd>-3.402823e+38</dd><dt><span>scale_factor :</span></dt><dd>1.0</dd><dt><span>add_offset :</span></dt><dd>0.0</dd></dl></div></li></ul></div></div></div></div>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="raster-analysis">
@@ -1137,7 +1251,7 @@ Attributes:
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Viewshed from 724000, 4918000&#39;)
 </pre></div>
 </div>
-<img alt="../_images/rasterbasics_8_1.png" src="../_images/rasterbasics_8_1.png" />
+<img alt="../_images/rasterbasics_15_1.png" src="../_images/rasterbasics_15_1.png" />
 </div>
 </div>
 <section id="exercise-1">
@@ -1208,10 +1322,10 @@ Extract the location of the steepest slope. Hint: use ‘nanmax’ on the viewsh
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The steepest slope in sight has a values of 80.78018 degrees
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x2712c7eb310&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x1c1a1dbb9a0&gt;
 </pre></div>
 </div>
-<img alt="../_images/rasterbasics_10_2.png" src="../_images/rasterbasics_10_2.png" />
+<img alt="../_images/rasterbasics_17_2.png" src="../_images/rasterbasics_17_2.png" />
 </div>
 </div>
 </section>
@@ -1362,7 +1476,27 @@ Look at <a class="reference external" href="https://landsat.gsfc.nasa.gov/satell
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing stacked bands to ../scratch\LS_stacked_2015.tif
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.QuadMesh at 0x2712d31ec70&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.QuadMesh at 0x1c1a1e4ee60&gt;
+</pre></div>
+</div>
+<img alt="../_images/rasterbasics_21_2.png" src="../_images/rasterbasics_21_2.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ls_2015</span><span class="o">.</span><span class="n">attrs</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;AREA_OR_POINT&#39;: &#39;Area&#39;,
+ &#39;long_name&#39;: (&#39;Coastal_and_aerosol&#39;,
+  &#39;Blue&#39;,
+  &#39;Green&#39;,
+  &#39;Red&#39;,
+  &#39;NIR&#39;,
+  &#39;SWIR1&#39;,
+  &#39;SWIR2&#39;)}
 </pre></div>
 </div>
 </div>
@@ -1379,14 +1513,10 @@ Look at <a class="reference external" href="https://landsat.gsfc.nasa.gov/satell
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\rasterio\windows.py:310: RasterioDeprecationWarning: The height, width, and precision parameters are unused, deprecated, and will be removed in 2.0.0.
-  warnings.warn(
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.QuadMesh at 0x1c1a1f9fc70&gt;
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.QuadMesh at 0x20c81191b50&gt;
-</pre></div>
-</div>
-<img alt="../_images/rasterbasics_16_2.png" src="../_images/rasterbasics_16_2.png" />
+<img alt="../_images/rasterbasics_24_1.png" src="../_images/rasterbasics_24_1.png" />
 </div>
 </div>
 <p><strong>Question 4</strong> How much smaller is the clipped image in number of cells and as a fraction?</p>
@@ -1428,7 +1558,7 @@ The reduction in number of cells is 54035805
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/rasterbasics_21_0.png" src="../_images/rasterbasics_21_0.png" />
+<img alt="../_images/rasterbasics_29_0.png" src="../_images/rasterbasics_29_0.png" />
 </div>
 </div>
 <p>There are many interesting and useful components to note from this figure:</p>
@@ -1512,7 +1642,7 @@ The reduction in number of cells is 54035805
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;Red - band 4&#39;)
 </pre></div>
 </div>
-<img alt="../_images/rasterbasics_25_2.png" src="../_images/rasterbasics_25_2.png" />
+<img alt="../_images/rasterbasics_33_2.png" src="../_images/rasterbasics_33_2.png" />
 </div>
 </div>
 <section id="exercise-2">
@@ -1566,12 +1696,6 @@ The reduction in number of cells is 54035805
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ls_2020</span> <span class="o">=</span> <span class="n">rioxarray</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;LS_stacked_2020.tif&#39;</span><span class="p">))</span>
 <span class="n">ls_2020_clip</span> <span class="o">=</span> <span class="n">ls_2020</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">clip_box</span><span class="p">(</span><span class="n">minx</span><span class="o">=</span><span class="n">xmin</span><span class="p">,</span> <span class="n">miny</span><span class="o">=</span><span class="n">ymin</span><span class="p">,</span> <span class="n">maxx</span><span class="o">=</span><span class="n">xmax</span><span class="p">,</span> <span class="n">maxy</span><span class="o">=</span><span class="n">ymax</span><span class="p">)</span>
 <span class="n">ls_2020_clip</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">to_raster</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;ls_2020_clip2.tif&#39;</span><span class="p">),</span> <span class="n">compress</span><span class="o">=</span><span class="s1">&#39;LZw&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\rasterio\windows.py:310: RasterioDeprecationWarning: The height, width, and precision parameters are unused, deprecated, and will be removed in 2.0.0.
-  warnings.warn(
 </pre></div>
 </div>
 </div>
@@ -1656,16 +1780,14 @@ The reduction in number of cells is 54035805
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Writing stacked bands to ../scratch\LS_stacked_2020.tif
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\rasterio\windows.py:310: RasterioDeprecationWarning: The height, width, and precision parameters are unused, deprecated, and will be removed in 2.0.0.
-  warnings.warn(
-C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\pandas\core\dtypes\cast.py:122: ShapelyDeprecationWarning: The array interface is deprecated and will no longer work in Shapely 2.0. Convert the &#39;.coords&#39; to a numpy array instead.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\pandas\core\dtypes\cast.py:127: ShapelyDeprecationWarning: The array interface is deprecated and will no longer work in Shapely 2.0. Convert the &#39;.coords&#39; to a numpy array instead.
   arr = construct_1d_object_array_from_listlike(values)
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x1f227931e80&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x1c19fe1c910&gt;
 </pre></div>
 </div>
-<img alt="../_images/rasterbasics_28_3.png" src="../_images/rasterbasics_28_3.png" />
+<img alt="../_images/rasterbasics_36_3.png" src="../_images/rasterbasics_36_3.png" />
 </div>
 </div>
 </section>
@@ -1755,7 +1877,7 @@ C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\pandas\core\dtypes\cast.p
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NDVI values for 2015 and 2020:  0.1288822400728479 0.5250064709096661
 </pre></div>
 </div>
-<img alt="../_images/rasterbasics_30_1.png" src="../_images/rasterbasics_30_1.png" />
+<img alt="../_images/rasterbasics_38_1.png" src="../_images/rasterbasics_38_1.png" />
 </div>
 </div>
 <p>The spectral profiles above show the change from bare land in 2015 to cropland in 2020. The bare land has higher values in the red band and lower values in near infrared when compared to cropland. This leads to a lower NDVI for bare land than for cropland.</p>
@@ -1854,7 +1976,7 @@ C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\pandas\core\dtypes\cast.p
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/rasterbasics_36_0.png" src="../_images/rasterbasics_36_0.png" />
+<img alt="../_images/rasterbasics_44_0.png" src="../_images/rasterbasics_44_0.png" />
 </div>
 </div>
 </section>
@@ -1894,7 +2016,7 @@ C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\pandas\core\dtypes\cast.p
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;EPSG:28992&#39;)
 </pre></div>
 </div>
-<img alt="../_images/rasterbasics_39_1.png" src="../_images/rasterbasics_39_1.png" />
+<img alt="../_images/rasterbasics_47_1.png" src="../_images/rasterbasics_47_1.png" />
 </div>
 </div>
 </section>
@@ -1921,7 +2043,7 @@ C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\pandas\core\dtypes\cast.p
     <span class="n">da_tile</span> <span class="o">=</span> <span class="n">rioxarray</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span><span class="n">f_tile</span><span class="p">,</span> <span class="n">mask_and_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">da_tile</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">write_crs</span><span class="p">(</span><span class="mi">28992</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">data_arrays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">da_tile</span><span class="p">)</span>
-    <span class="n">ds</span><span class="p">[</span><span class="n">map_no</span><span class="p">]</span> <span class="o">=</span> <span class="n">da_tile</span>
+<span class="c1">#     ds[map_no] = da_tile</span>
 <span class="n">ahn_mosaic</span> <span class="o">=</span> <span class="n">merge_arrays</span><span class="p">(</span><span class="n">data_arrays</span><span class="p">)</span>
 <span class="n">ahn_mosaic</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;long_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;AHN_cm&#39;</span><span class="p">)</span>
 <span class="n">ahn_mosaic</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">to_raster</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="n">scratch_dir</span><span class="p">,</span> <span class="s1">&#39;ahn.tif&#39;</span><span class="p">))</span>
@@ -1945,12 +2067,11 @@ C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\pandas\core\dtypes\cast.p
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\rasterio\windows.py:310: RasterioDeprecationWarning: The height, width, and precision parameters are unused, deprecated, and will be removed in 2.0.0.
-  warnings.warn(
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x1c22299f4c0&gt;
 </pre></div>
 </div>
-<img alt="../_images/rasterbasics_41_1.png" src="../_images/rasterbasics_41_1.png" />
-<img alt="../_images/rasterbasics_41_2.png" src="../_images/rasterbasics_41_2.png" />
+<img alt="../_images/rasterbasics_49_1.png" src="../_images/rasterbasics_49_1.png" />
+<img alt="../_images/rasterbasics_49_2.png" src="../_images/rasterbasics_49_2.png" />
 </div>
 </div>
 <p>Adjust to code to write the clipped DEM to file and open in QGIS. Note that there is a stripy pattern of missing data in the smaller water bodies.</p>
@@ -1972,14 +2093,14 @@ C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\pandas\core\dtypes\cast.p
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\rioxarray\raster_writer.py:110: UserWarning: The nodata value (3.402823466e+38) has been automatically changed to (3.4028234663852886e+38) to match the dtype of the data.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\rioxarray\raster_writer.py:115: UserWarning: The nodata value (3.402823466e+38) has been automatically changed to (3.4028234663852886e+38) to match the dtype of the data.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.QuadMesh at 0x20d1ca59280&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.QuadMesh at 0x1c1a1e6df90&gt;
 </pre></div>
 </div>
-<img alt="../_images/rasterbasics_44_2.png" src="../_images/rasterbasics_44_2.png" />
+<img alt="../_images/rasterbasics_52_2.png" src="../_images/rasterbasics_52_2.png" />
 </div>
 </div>
 <p><strong>Question 11</strong> Why is the file size of ‘evi_2015_RD.tif’ more than a factor 10 smaller than ‘evi_2015.tif’?</p>
@@ -2018,8 +2139,8 @@ C:\Users\straa005\Anaconda3\envs\sml\lib\site-packages\pandas\core\dtypes\cast.p
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/rasterbasics_47_0.png" src="../_images/rasterbasics_47_0.png" />
-<img alt="../_images/rasterbasics_47_1.png" src="../_images/rasterbasics_47_1.png" />
+<img alt="../_images/rasterbasics_55_0.png" src="../_images/rasterbasics_55_0.png" />
+<img alt="../_images/rasterbasics_55_1.png" src="../_images/rasterbasics_55_1.png" />
 </div>
 </div>
 <p>The spatial results show category 5, with terrain heights above 500 cm along the dune field close to the coastline and on the ‘Utrechtse Heuvelrug’ in the East. The EVI values show a much more noisy pattern, but also a cluster of higher values in the East. The statistical analysis showed an average value of 2.9 for zone 5, which is 0.5 higher than the other zones. However, the standard deviation of all zones is larger than the difference in mean between the zones.</p>
